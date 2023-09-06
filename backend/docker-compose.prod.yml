@@ -46,6 +46,8 @@ services:
     command: ["./pocketbase", "serve", "--http=0.0.0.0:${PB_PORT}"]
     container_name: pocketbase
     restart: always
+    depends_on:
+      - traefik
     networks:
       - traefik-net
     ports:
@@ -78,6 +80,8 @@ services:
     image: moul/icecast
     container_name: icecast
     restart: always
+    depends_on:
+      - traefik
     volumes:
       - logs:/var/log/icecast2
       - /etc/localtime:/etc/localtime:ro
@@ -123,6 +127,7 @@ services:
     depends_on:
       - pocketbase
       - icecast
+      - traefik
     networks:
       - traefik-net
     ports:
@@ -187,6 +192,7 @@ services:
       - pocketbase
       - liquidsoap
       - icecast
+      - traefik
 
 volumes:
   logs:
