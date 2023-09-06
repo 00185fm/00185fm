@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  ################ POCKETBASE
+  pocketbase:
+    build:
+      context: ./pocketbase
+      args:
+        - PB_PORT
+    container_name: pocketbase
+    command: ["./pocketbase", "serve", "--http=0.0.0.0:${PB_PORT}"]
+    restart: always
+    ports:
+      - ${PB_PORT}:${PB_PORT}
+    volumes:
+      - ./pocketbase/pb_data:/pb/pb_data
+      - ./pocketbase/pb_hooks:/pb/pb_hooks
+      - ./pocketbase/pb_public:/pb/pb_public
+    healthcheck: #optional (recommended) since v0.10.0
+      test: wget --no-verbose --tries=1 --spider http://localhost:4090/api/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  ################ ICECAST
+  icecast:
+    image: moul/icecast
+    container_name: icecast
+    restart: always
+    volumes:
+      - logs:/var/log/icecast2
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - ICECAST_HOSTNAME
+      - ICECAST_SOURCE_PASSWORD
+      - ICECAST_ADMIN_PASSWORD
+      - ICECAST_PASSWORD
+      - ICECAST_RELAY_PASSWORD
+    ports:
+      - ${ICECAST_PORT:-4040}:8000
+
+  ################ LIQUIDSOAP
+  liquidsoap:
+    image: "savonet/liquidsoap-alpine:v2.1.4"
+    container_name: liquidsoap
+    restart: always
+    command: ["/settings.liq"]
+    environment:
+      - ICECAST_HOSTNAME
+      - ICECAST_SOURCE_PASSWORD
+      - STREAM_NAME
+      - STREAM_DESC
+      - STREAM_URL
+      - STREAM_MOUNTPOINT
+      - LIVE_PASSWORD
+      - LIVE_MOUNTPOINT
+    depends_on:
+      - pocketbase
+      - icecast
+    ports:
+      - "${LIVE_PORT:-4080}:4080"
+    volumes:
+      - ./pocketbase/pb_public/:/pb_public:ro
+      - ./liquidsoap/settings.liq:/settings.liq:ro
+volumes:
+  logs:

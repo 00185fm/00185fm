@@ -1,0 +1,31 @@
+FROM node:20-alpine3.17 AS builder
+WORKDIR /app
+
+# build args
+ARG PUBLIC_NP_ID
+ARG PUBLIC_DEF_PLAYLIST_ID
+ARG PUBLIC_POCKETBASE_URL
+ARG PUBLIC_DEFAUL_ART
+ARG PUBLIC_RADIO_URL
+ARG PRIVATE_ICECAST
+# set env
+ENV PUBLIC_NP_ID $PUBLIC_NP_ID
+ENV PUBLIC_DEF_PLAYLIST_ID $PUBLIC_DEF_PLAYLIST_ID
+ENV PUBLIC_POCKETBASE_URL $PUBLIC_POCKETBASE_URL
+ENV PUBLIC_DEFAUL_ART $PUBLIC_DEFAUL_ART
+ENV PUBLIC_RADIO_URL $PUBLIC_RADIO_URL
+ENV PRIVATE_ICECAST $PRIVATE_ICECAST
+
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build && npm prune --production
+
+FROM node:20-alpine3.17
+USER node:node
+WORKDIR /app
+COPY --from=builder --chown=node:node /app/build ./build
+COPY --from=builder --chown=node:node /app/node_modules ./node_modules
+COPY --chown=node:node package.json .
+ENV PORT 4000
+CMD [ "node", "build" ]

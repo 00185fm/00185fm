@@ -1,0 +1,7 @@
+.DS_Store
+.env
+icecast/logs
+music/**
+pocketbase/pb_data
+pocketbase/credentials.csv
+traefik/acme.json
