@@ -1,8 +1,8 @@
 name: Deploy
 on:
-  push:
-    branches: [main, master]
-    # branches: [dev]
+  pull_request:
+    branches:
+      - main
 jobs:
   copy:
     name: Pull Repository on Server
