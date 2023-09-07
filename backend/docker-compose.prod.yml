@@ -59,7 +59,6 @@ services:
       - traefik
     networks:
       - traefik-net
-      - internal
     ports:
       - ${PB_PORT}:${PB_PORT}
     environment:
@@ -101,7 +100,6 @@ services:
       - ICECAST_RELAY_PASSWORD
     networks:
       - traefik-net
-      - internal
     ports:
       - ${ICECAST_PORT:-4040}:8000
     labels:
@@ -138,10 +136,9 @@ services:
       - traefik
     networks:
       - traefik-net
-      - internal
     ports:
-      - "${LIVE_PORT:-4085}:4085"
-      - "${LOCAL_PORT:-4080}:4080"
+      - "${LIVE_PORT:-4080}:4080"
+      - "${LOCAL_PORT:-4085}:4085"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.liquidsoap.rule=Host(`liq.00185fm.eu`)"
@@ -177,7 +174,6 @@ services:
       - PRIVATE_LIQUIDSOAP
     networks:
       - traefik-net
-      - internal
     ports:
       - "4000:4000"
     labels:
@@ -198,4 +194,3 @@ volumes:
 
 networks:
   traefik-net:
-  internal:

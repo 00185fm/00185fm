@@ -72,7 +72,7 @@ def live_disconnected() =
     live_enabled := false
 end
 
-live = input.harbor(getenv("LIVE_MOUNTPOINT"),port=4085,password=getenv("LIVE_PASSWORD"), icy = true, icy_metadata_charset = "UTF-8", metadata_charset = "UTF-8", on_connect = live_connected, on_disconnect = live_disconnected, buffer = 5.00, max = 10.00)
+live = input.harbor(getenv("LIVE_MOUNTPOINT"),port=4080,password=getenv("LIVE_PASSWORD"), icy = true, icy_metadata_charset = "UTF-8", metadata_charset = "UTF-8", on_connect = live_connected, on_disconnect = live_disconnected, buffer = 5.00, max = 10.00)
 
 def insert_missing(m) =
     if m == [] then
@@ -109,7 +109,7 @@ def skip_next(~protocol,~data,~headers,uri) =
     )
 end
 
-harbor.http.register(port=4080,method="GET","/nextsong",skip_next)
+harbor.http.register(port=4085,method="GET","/nextsong",skip_next)
 
 
 # Send metadata changes back to Server

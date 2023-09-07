@@ -140,8 +140,8 @@ services:
       - traefik-net
       - internal
     ports:
-      - "${LIVE_PORT:-4085}:4085"
-      - "${LOCAL_PORT:-4080}:4080"
+      - "${LIVE_PORT:-4080}:4080"
+      - "${LOCAL_PORT:-4085}:4085"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.liquidsoap.rule=Host(`liq.local.00185fm.eu`)"
