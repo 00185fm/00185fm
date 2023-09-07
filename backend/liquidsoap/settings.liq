@@ -25,8 +25,8 @@ to_live = ref(false)
 ignore(to_live)
 
 
-radio_api_url = "pocketbase:4090/radio/nowplaying"
-
+radio_api_url = getenv("PB_NP")
+api_token = getenv("LIQ_TOKEN")
 
 def radio_api_post(~timeout_ms=2000, payload) =
     
@@ -35,7 +35,8 @@ def radio_api_post(~timeout_ms=2000, payload) =
         response = http.post(radio_api_url,
             headers=[
                 ("Content-Type", "application/json"),
-                ("User-Agent", "Liquidsoap 00185fm")
+                ("User-Agent", "Liquidsoap 00185fm"),
+                ("Authorization","#{api_token}")
             ],
             timeout_ms=timeout_ms,
             data=payload
@@ -49,12 +50,12 @@ def radio_api_post(~timeout_ms=2000, payload) =
     end
 end
 
-
+pb_def_playlist = getenv("PB_DEF_PLAYLIST")
 # Playlist
 i_playlist = crossfade(
     duration=4.0,
     smart=true,
-    playlist(mode='randomize',reload=600,"http://pocketbase:4090/playlists/default.m3u")
+    playlist(mode='randomize',reload=600,pb_def_playlist)
 )
 
 # Error
@@ -71,7 +72,7 @@ def live_disconnected() =
     live_enabled := false
 end
 
-live = input.harbor(getenv("LIVE_MOUNTPOINT"),port=4080,password=getenv("LIVE_PASSWORD"), icy = true, icy_metadata_charset = "UTF-8", metadata_charset = "UTF-8", on_connect = live_connected, on_disconnect = live_disconnected, buffer = 5.00, max = 10.00)
+live = input.harbor(getenv("LIVE_MOUNTPOINT"),port=4085,password=getenv("LIVE_PASSWORD"), icy = true, icy_metadata_charset = "UTF-8", metadata_charset = "UTF-8", on_connect = live_connected, on_disconnect = live_disconnected, buffer = 5.00, max = 10.00)
 
 def insert_missing(m) =
     if m == [] then
@@ -83,10 +84,6 @@ end
 live = metadata.map(insert_missing, live)
 
 radio = fallback(id="live_fallback", replay_metadata=true, [live, error])
-
-# Allow for Telnet-driven insertion of custom metadata.
-radio = server.insert_metadata(id="custom_metadata", radio)
-
 
 # Apply amplification metadata (if supplied)
 radio = amplify(override="liq_amplify", 1., radio)

@@ -1,6 +1,6 @@
 import { pb } from '$lib/pocketbase';
 import { redirect, type Actions, type ServerLoad } from '@sveltejs/kit';
-import { PRIVATE_ICECAST } from '$env/static/private';
+import { PRIVATE_LIQUIDSOAP } from '$env/static/private';
 import { PUBLIC_NP_ID } from '$env/static/public';
 
 export const load: ServerLoad = async ({ locals }) => {
@@ -20,7 +20,7 @@ export const load: ServerLoad = async ({ locals }) => {
 export const actions: Actions = {
 	nextsong: async () => {
 		try {
-			const url = PRIVATE_ICECAST + '/nextsong';
+			const url = PRIVATE_LIQUIDSOAP + '/nextsong';
 			const result = await fetch(url, {
 				method: 'GET',
 				headers: {

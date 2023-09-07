@@ -1,10 +1,10 @@
 import type { Actions } from '@sveltejs/kit';
-import { PRIVATE_ICECAST } from '$env/static/private';
+import { PRIVATE_LIQUIDSOAP } from '$env/static/private';
 
 export const actions: Actions = {
 	nextsong: async () => {
 		try {
-			const url = PRIVATE_ICECAST + '/nextsong';
+			const url = PRIVATE_LIQUIDSOAP + '/nextsong';
 			const result = await fetch(url, {
 				method: 'GET',
 				headers: {

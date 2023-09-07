@@ -26,8 +26,8 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
       - "--entrypoints.websecure.http.tls=true"
       - "--entrypoints.websecure.http.tls.certResolver=letsencrypt"
-      - "--entrypoints.websecure.http.tls.domains[0].main=00185fm.eu"
-      - "--entrypoints.websecure.http.tls.domains[0].sans=*.00185fm.eu"
+      - "--entrypoints.websecure.http.tls.domains[0].main=local.00185fm.eu"
+      - "--entrypoints.websecure.http.tls.domains[0].sans=*.local.00185fm.eu"
       # Global redirect to https
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
@@ -72,7 +72,7 @@ services:
       - ./pocketbase/pb_public:/pb/pb_public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pocketbase.rule=Host(`pb.00185fm.eu`)"
+      - "traefik.http.routers.pocketbase.rule=Host(`pb.local.00185fm.eu`)"
       - "traefik.http.routers.pocketbase.entrypoints=websecure"
       - "traefik.http.routers.pocketbase.tls.certresolver=letsencrypt"
       - "traefik.http.services.pocketbase.loadbalancer.server.port=4090"
@@ -106,7 +106,7 @@ services:
       - ${ICECAST_PORT:-4040}:8000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.icecast.rule=Host(`ice.00185fm.eu`)"
+      - "traefik.http.routers.icecast.rule=Host(`ice.local.00185fm.eu`)"
       - "traefik.http.routers.icecast.entrypoints=websecure"
       - "traefik.http.routers.icecast.tls.certresolver=letsencrypt"
       - "traefik.http.services.icecast.loadbalancer.server.port=8000"
@@ -144,7 +144,7 @@ services:
       - "${LOCAL_PORT:-4080}:4080"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.liquidsoap.rule=Host(`liq.00185fm.eu`)"
+      - "traefik.http.routers.liquidsoap.rule=Host(`liq.local.00185fm.eu`)"
       - "traefik.http.routers.liquidsoap.entrypoints=websecure"
       - "traefik.http.routers.liquidsoap.tls.certresolver=letsencrypt"
       - "traefik.http.services.liquidsoap.loadbalancer.server.port=${LIVE_PORT}"
@@ -182,7 +182,7 @@ services:
       - "4000:4000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`dev.00185fm.eu`)"
+      - "traefik.http.routers.app.rule=Host(`dev.local.00185fm.eu`)"
       - "traefik.http.routers.app.entrypoints=websecure"
       - "traefik.http.routers.app.tls.certresolver=letsencrypt"
       - "traefik.http.services.app.loadbalancer.server.port=4000"

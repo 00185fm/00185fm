@@ -7,11 +7,16 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
+        - PB_VERSION=0.18.1
     container_name: pocketbase
     command: ["./pocketbase", "serve", "--http=0.0.0.0:${PB_PORT}"]
     restart: always
     ports:
       - ${PB_PORT}:${PB_PORT}
+    environment:
+      - NOW_PLAYING_ID
+      - LIQ_TOKEN
+      - PB_FILES_URL
     volumes:
       - ./pocketbase/pb_data:/pb/pb_data
       - ./pocketbase/pb_hooks:/pb/pb_hooks
@@ -53,11 +58,17 @@ services:
       - STREAM_MOUNTPOINT
       - LIVE_PASSWORD
       - LIVE_MOUNTPOINT
+      - LIQ_TOKEN
+      - LIVE_PORT
+      - LOCAL_PORT
+      - PB_NP
+      - PB_DEF_PLAYLIST
     depends_on:
       - pocketbase
       - icecast
     ports:
-      - "${LIVE_PORT:-4080}:4080"
+      - "${LIVE_PORT:-4085}:4085"
+      - "${LOCAL_PORT:-4080}:4080"
     volumes:
       - ./pocketbase/pb_public/:/pb_public:ro
       - ./liquidsoap/settings.liq:/settings.liq:ro
