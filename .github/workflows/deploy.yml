@@ -9,20 +9,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
-
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v39
-        # with:
-        #   since_last_remote_commit: true
-        #   separator: ","
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
-            echo "$file was changed"
-          done
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.4
@@ -31,8 +17,8 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
-          # source: .
+          # source: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+          source: .
           target: ${{ secrets.LOCAL_PATH }}
   deploy:
     needs: copy
