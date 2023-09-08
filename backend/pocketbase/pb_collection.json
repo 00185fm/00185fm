@@ -6,11 +6,13 @@
     "system": false,
     "schema": [
       {
+        "system": false,
         "id": "hxzgyzzq",
         "name": "info",
         "type": "text",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -18,11 +20,13 @@
         }
       },
       {
+        "system": false,
         "id": "jwooyjxw",
         "name": "title",
         "type": "text",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -30,11 +34,13 @@
         }
       },
       {
+        "system": false,
         "id": "itc2vyfr",
         "name": "author",
         "type": "text",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -42,41 +48,16 @@
         }
       },
       {
+        "system": false,
         "id": "8b4fqy0h",
         "name": "date",
         "type": "date",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": "",
           "max": ""
-        }
-      }
-    ],
-    "indexes": [],
-    "listRule": "@request.auth.id != \"\"",
-    "viewRule": "@request.auth.id != \"\"",
-    "createRule": "@request.auth.id != \"\"",
-    "updateRule": "@request.auth.id != \"\"",
-    "deleteRule": "@request.auth.id != \"\"",
-    "options": {}
-  },
-  {
-    "id": "cpgulaa4gcbbzm8",
-    "name": "tags",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "leomutaz",
-        "name": "tag",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
         }
       }
     ],
@@ -112,250 +93,19 @@
     }
   },
   {
-    "id": "xgqcerg0a0evy4w",
-    "name": "playlists",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "8dttqbcn",
-        "name": "title",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      }
-    ],
-    "indexes": [],
-    "listRule": "@request.auth.id != \"\"",
-    "viewRule": "@request.auth.id != \"\"",
-    "createRule": "@request.auth.id != \"\"",
-    "updateRule": "@request.auth.id != \"\"",
-    "deleteRule": "@request.auth.id != \"\"",
-    "options": {}
-  },
-  {
-    "id": "4ocj0wdpxqjifls",
-    "name": "episodes",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "sptffw30",
-        "name": "title",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "jhqzavno",
-        "name": "author",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "a9bxmvdz",
-        "name": "date",
-        "type": "date",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
-      },
-      {
-        "id": "lqcvpxqv",
-        "name": "description",
-        "type": "editor",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "tfitct89",
-        "name": "slug",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "dn7jupwj",
-        "name": "audio",
-        "type": "file",
-        "system": false,
-        "required": false,
-        "options": {
-          "maxSelect": 1,
-          "maxSize": 500000000,
-          "mimeTypes": [
-            "audio/mpeg",
-            "audio/flac",
-            "audio/wav",
-            "audio/aiff",
-            "audio/aac",
-            "audio/mp4"
-          ],
-          "thumbs": [],
-          "protected": false
-        }
-      },
-      {
-        "id": "1hsovzhj",
-        "name": "image",
-        "type": "file",
-        "system": false,
-        "required": false,
-        "options": {
-          "maxSelect": 1,
-          "maxSize": 5242880,
-          "mimeTypes": ["image/png", "image/jpeg", "image/webp"],
-          "thumbs": ["300x300", "1000x1000"],
-          "protected": false
-        }
-      },
-      {
-        "id": "bducp5so",
-        "name": "show",
-        "type": "relation",
-        "system": false,
-        "required": false,
-        "options": {
-          "collectionId": "zqs2e7bgkehjv49",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": []
-        }
-      },
-      {
-        "id": "lles2gbu",
-        "name": "tags",
-        "type": "relation",
-        "system": false,
-        "required": false,
-        "options": {
-          "collectionId": "cpgulaa4gcbbzm8",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": null,
-          "displayFields": ["tag"]
-        }
-      },
-      {
-        "id": "vyc3q8b2",
-        "name": "playlists",
-        "type": "relation",
-        "system": false,
-        "required": false,
-        "options": {
-          "collectionId": "xgqcerg0a0evy4w",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": null,
-          "displayFields": ["title"]
-        }
-      }
-    ],
-    "indexes": ["CREATE INDEX `idx_Vg36Lhg` ON `episodes` (`date`)"],
-    "listRule": "@request.auth.id != \"\"",
-    "viewRule": "@request.auth.id != \"\"",
-    "createRule": "@request.auth.id != \"\"",
-    "updateRule": "@request.auth.id != \"\"",
-    "deleteRule": "@request.auth.id != \"\"",
-    "options": {}
-  },
-  {
-    "id": "zqs2e7bgkehjv49",
-    "name": "shows",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "0phzwqxk",
-        "name": "title",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "tadh9nol",
-        "name": "author",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "0apt60c2",
-        "name": "description",
-        "type": "editor",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "iwrakjpg",
-        "name": "slug",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      }
-    ],
-    "indexes": [],
-    "listRule": "@request.auth.id != \"\"",
-    "viewRule": "@request.auth.id != \"\"",
-    "createRule": "@request.auth.id != \"\"",
-    "updateRule": "@request.auth.id != \"\"",
-    "deleteRule": "@request.auth.id != \"\"",
-    "options": {}
-  },
-  {
     "id": "6hp0wa28phl452k",
     "name": "episodes_show",
     "type": "view",
     "system": false,
     "schema": [
       {
+        "system": false,
         "id": "btfmabh9",
         "name": "show",
         "type": "relation",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "collectionId": "zqs2e7bgkehjv49",
           "cascadeDelete": false,
@@ -365,14 +115,17 @@
         }
       },
       {
+        "system": false,
         "id": "dmjcvqyn",
         "name": "count",
         "type": "number",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
-          "max": null
+          "max": null,
+          "noDecimal": false
         }
       }
     ],
@@ -393,11 +146,13 @@
     "system": false,
     "schema": [
       {
+        "system": false,
         "id": "9nta9mjt",
         "name": "tags",
         "type": "relation",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "collectionId": "cpgulaa4gcbbzm8",
           "cascadeDelete": false,
@@ -407,14 +162,17 @@
         }
       },
       {
+        "system": false,
         "id": "ypvfxrgb",
         "name": "episodes",
         "type": "number",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
-          "max": null
+          "max": null,
+          "noDecimal": false
         }
       }
     ],
@@ -429,17 +187,320 @@
     }
   },
   {
+    "id": "4ocj0wdpxqjifls",
+    "name": "episodes",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "sptffw30",
+        "name": "title",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "jhqzavno",
+        "name": "author",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "a9bxmvdz",
+        "name": "date",
+        "type": "date",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "lqcvpxqv",
+        "name": "description",
+        "type": "editor",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "convertUrls": false
+        }
+      },
+      {
+        "system": false,
+        "id": "tfitct89",
+        "name": "slug",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "dn7jupwj",
+        "name": "audio",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 500000000,
+          "mimeTypes": [
+            "audio/mpeg",
+            "audio/flac",
+            "audio/wav",
+            "audio/aiff",
+            "audio/aac",
+            "audio/mp4"
+          ],
+          "thumbs": [],
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "1hsovzhj",
+        "name": "image",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": ["image/png", "image/jpeg", "image/webp"],
+          "thumbs": ["300x300", "1000x1000"],
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "bducp5so",
+        "name": "show",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "zqs2e7bgkehjv49",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "system": false,
+        "id": "lles2gbu",
+        "name": "tags",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "cpgulaa4gcbbzm8",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": null,
+          "displayFields": ["tag"]
+        }
+      },
+      {
+        "system": false,
+        "id": "vyc3q8b2",
+        "name": "playlists",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "xgqcerg0a0evy4w",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": null,
+          "displayFields": ["title"]
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX `idx_Vg36Lhg` ON `episodes` (`date`)",
+      "CREATE UNIQUE INDEX `idx_PLWxydZ` ON `episodes` (\n  `title`,\n  `author`,\n  `show`\n)"
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\"",
+    "options": {}
+  },
+  {
+    "id": "zqs2e7bgkehjv49",
+    "name": "shows",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "0phzwqxk",
+        "name": "title",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "tadh9nol",
+        "name": "author",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "0apt60c2",
+        "name": "description",
+        "type": "editor",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "convertUrls": false
+        }
+      },
+      {
+        "system": false,
+        "id": "iwrakjpg",
+        "name": "slug",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_hb3wfok` ON `shows` (\n  `title`,\n  `slug`\n)"
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\"",
+    "options": {}
+  },
+  {
+    "id": "cpgulaa4gcbbzm8",
+    "name": "tags",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "leomutaz",
+        "name": "tag",
+        "type": "text",
+        "required": false,
+        "presentable": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": ["CREATE UNIQUE INDEX `idx_IiQaROL` ON `tags` (`tag`)"],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\"",
+    "options": {}
+  },
+  {
+    "id": "xgqcerg0a0evy4w",
+    "name": "playlists",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "8dttqbcn",
+        "name": "title",
+        "type": "text",
+        "required": false,
+        "presentable": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": ["CREATE UNIQUE INDEX `idx_5HKo4ij` ON `playlists` (`title`)"],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\"",
+    "options": {}
+  },
+  {
     "id": "ymrl6gbbiznw3ii",
     "name": "nowplaying",
     "type": "base",
     "system": false,
     "schema": [
       {
+        "system": false,
         "id": "pzmwsrdy",
         "name": "title",
         "type": "text",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -447,11 +508,13 @@
         }
       },
       {
+        "system": false,
         "id": "fuc3pxn9",
         "name": "artist",
         "type": "text",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -459,19 +522,23 @@
         }
       },
       {
+        "system": false,
         "id": "wniocd3s",
         "name": "is_live",
         "type": "bool",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {}
       },
       {
+        "system": false,
         "id": "vhbro1m7",
         "name": "slug",
         "type": "text",
-        "system": false,
         "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -482,9 +549,166 @@
     "indexes": [],
     "listRule": "",
     "viewRule": "",
-    "createRule": "",
-    "updateRule": "",
-    "deleteRule": "",
+    "createRule": null,
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "ou8sl6z9soeyh5z",
+    "name": "projects",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "byynius4",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "iiivekse",
+        "name": "about",
+        "type": "editor",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "convertUrls": false
+        }
+      },
+      {
+        "system": false,
+        "id": "d6jyl2mf",
+        "name": "impressum",
+        "type": "editor",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "convertUrls": false
+        }
+      },
+      {
+        "system": false,
+        "id": "zwivpzus",
+        "name": "email",
+        "type": "email",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "jhn5sqkb",
+        "name": "support",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "4qeflcwg",
+        "name": "telegram",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "j6dtdnhd",
+        "name": "website",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "vl3ukoir",
+        "name": "bandcamp",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "gteu8edf",
+        "name": "youtube",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "f9h1pdhn",
+        "name": "facebook",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "wtfifa7m",
+        "name": "instagram",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\"",
     "options": {}
   }
 ]

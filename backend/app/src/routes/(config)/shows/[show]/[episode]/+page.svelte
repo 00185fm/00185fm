@@ -116,7 +116,7 @@
 				{/if}
 			</div>
 
-			<!-- <div class="py-2 sm:py-10">
+			<div class="py-2 sm:py-10">
 				<Accordion
 					regionPanel="variant-ghost-tertiary"
 					hover="variant-ghost-secondary hover:variant-ghost-primary"
@@ -150,7 +150,7 @@
 						</svelte:fragment>
 					</AccordionItem>
 				</Accordion>
-			</div> -->
+			</div>
 		</div>
 	{/if}
 </div>
