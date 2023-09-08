@@ -5,6 +5,7 @@ import { updateEpisode } from '$lib/components/crud/schema';
 import { pb } from '$lib/pocketbase';
 import { slugify } from '$lib/server/utility';
 import type { RecordModel } from 'pocketbase';
+import { file_url } from '$lib/client/utility';
 
 export const load = async ({ parent, params, locals, cookies }) => {
 	if (!locals?.user) throw redirect(302, '/login');
@@ -14,8 +15,9 @@ export const load = async ({ parent, params, locals, cookies }) => {
 	const form = await superValidate(updateEpisode);
 	const episodes = (await parent()).episodes;
 	const episode: RecordModel = episodes.find((i) => i.slug.split('/')[1] === params.episode);
-	const audio = pb.files.getUrl(episode, episode.audio);
-	const image = pb.files.getUrl(episode, episode.image, { thumb: '1000x1000' });
+
+	const audio = file_url(episode.id, episode.audio, '');
+	const image = file_url(episode.id, episode.image, '?thumb=1000x1000');
 	return { episode, form, token: cookiesParsed.token, playlists, tags, image, audio };
 };
 

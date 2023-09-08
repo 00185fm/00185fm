@@ -3,8 +3,6 @@ routerAdd(
   "/radio/nowplaying",
   (c) => {
     const token = c.request().header.get("Authorization");
-
-    console.log(JSON.stringify(token));
     if (token === $os.getenv("LIQ_TOKEN")) {
       const np = new DynamicModel({
         title: "Title",
