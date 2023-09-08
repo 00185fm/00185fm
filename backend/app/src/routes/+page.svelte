@@ -26,7 +26,7 @@
 	});
 </script>
 
-<div class="container mx-auto p-10 space-y-4">
+<div class="container mx-auto p-4 sm:p-10 space-y-4">
 	<Nowplaying {np} {form} />
 	<Live livestream={data.livestream} />
 	<Github />

@@ -36,12 +36,12 @@
 		<p class="h2">Now Playing</p>
 	</header>
 	<section class="p-4 card variant-outline-primary m-4">
-		<div class="flex justify-between">
+		<div class="text-center sm:text-left sm:flex sm:justify-between">
 			<div>
 				<p><span class="font-bold">Title: </span>{np.title}</p>
 				<p><span class="font-bold">Artist: </span>{np.artist}</p>
 				{#if !np.is_live}
-					<a href={'/shows/' + np.slug} class="btn variant-ghost-primary capitalize"
+					<a href={'/shows/' + np.slug} class="btn variant-ghost-primary capitalize p-2 m-2"
 						>Go to episode!</a
 					>
 				{/if}
@@ -58,7 +58,7 @@
 					on:click={onClickHandler}
 					disabled={copied}
 				>
-					{copied ? 'Copied 👍' : 'Copy Stream Url'}
+					{copied ? 'Copied 👍' : 'Copy Icecast Url'}
 				</button>
 			</div>
 		</div>

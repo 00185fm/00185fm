@@ -30,8 +30,8 @@
 		</div>
 	</section>
 	<footer class="card-footer">
-		<div class="space-y-4">
-			<p class="flex justify-center w-full">
+		<div class="text-center space-y-4">
+			<p class="sm:flex sm:justify-center w-full">
 				You can use any <span class="font-bolt text-red-500 px-1">Icecast 2</span> compatible software
 				to stream content.
 			</p>

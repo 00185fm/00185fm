@@ -5,9 +5,9 @@
 	<section class="p-4 m-4 card variant-outline-primary">
 		<div class="space-y-4 text-center">
 			<a
-				class="btn variant-ghost-primary py-5"
+				class="btn variant-ghost-primary sm:py-5 flex"
 				href="https://github.com/00185fm/00185fm"
-				target="_blank">🤖 00185fm Github Repository ✨</a
+				target="_blank"><span class="flex-wrap">🤖 00185fm Github Repository ✨</span></a
 			>
 			<p>
 				If you find a bug or you got a suggestion for an improvement please report each in a
@@ -21,7 +21,7 @@
 		</div>
 	</section>
 	<footer class="card-footer text-center">
-		<div class="grid grid-cols-2 gap-4">
+		<div class="grid grid-rows-1 sm:grid-cols-2 gap-4">
 			<div class="p-10">
 				<p>Here you can find a 'Todo List' of what maintainers are working on.</p>
 				<p class="text-red-400">
