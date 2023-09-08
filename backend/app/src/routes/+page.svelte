@@ -2,6 +2,8 @@
 	import PocketBase from 'pocketbase';
 	import { PUBLIC_NP_ID, PUBLIC_POCKETBASE_URL } from '$env/static/public';
 	import Nowplaying from '$lib/components/nowplaying.svelte';
+	import Live from '$lib/components/live.svelte';
+	import Github from '$lib/components/github.svelte';
 	const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 	import { onMount, onDestroy } from 'svelte';
 	import type { ActionData } from './$types';
@@ -24,6 +26,8 @@
 	});
 </script>
 
-<div class="container mx-auto p-10">
+<div class="container mx-auto p-4 sm:p-10 space-y-4">
 	<Nowplaying {np} {form} />
+	<Live livestream={data.livestream} />
+	<Github />
 </div>

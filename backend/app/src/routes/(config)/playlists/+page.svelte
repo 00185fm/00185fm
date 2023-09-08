@@ -3,7 +3,7 @@
 	$: playlists = data.playlists;
 </script>
 
-<div class="container mx-auto p-10">
+<div class="container mx-auto p-2 sm:p-10">
 	<h2 class="h2 p-5">Playlists</h2>
 
 	<div class="p-4 text-center">
@@ -13,7 +13,7 @@
 		</p>
 	</div>
 	{#if playlists?.length > 0}
-		<div class="flex grid-flow-col gap-2">
+		<div class="grid grid-flow-row sm:grid-flow-col gap-2">
 			{#each playlists as playlist}
 				<a href="/playlists/{playlist.title}" class="card card-hover p-5">
 					<h3 class="h3">{playlist.title}</h3>

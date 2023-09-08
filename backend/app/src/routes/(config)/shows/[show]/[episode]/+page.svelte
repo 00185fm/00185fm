@@ -36,10 +36,10 @@
 	let updateForm = false;
 </script>
 
-<div class="container mx-auto p-10">
-	<div class="flex justify-between mb-2">
-		<h2 class="h2 p-5">{episode.title} w/ {episode.author}</h2>
-		<div class="btn-group-vertical variant-ghost mt-auto mb-auto">
+<div class="container mx-auto p-2 sm:p-10">
+	<div class="sm:flex text-center sm:text-left sm:justify-between mb-2">
+		<h2 class="h2 p-4">{episode.title} w/ {episode.author}</h2>
+		<div class="btn-group sm:btn-group-vertical variant-ghost mt-auto mb-auto">
 			<button on:click={() => ((updateForm = !updateForm), (tabSet = 0))}>Update</button>
 			<button on:click={deleteModal} class="variant-filled-error">Delete</button>
 		</div>
@@ -55,65 +55,68 @@
 			{audio}
 		/>
 	{:else}
-		<div class="grid grid-cols-2 gap-3">
-			<div class="space-y-3">
+		<div class="sm:grid sm:grid-cols-2 gap-3">
+			<div class="space-y-3 text-center sm:text-left">
 				{#if episode.date}
 					<p class="font-bold text-xl text-gray-400">
 						{dateFormat(episode.date)}
 					</p>
 				{:else}
-					<p>
+					<span class="inline-block">
 						⛔️ Date is missing <button
-							class="btn variant-ghost"
+							class="btn variant-ghost block sm:inline-block"
 							on:click={() => {
 								updateForm = true;
 								tabSet = 0;
 							}}>Go Update! ✨</button
 						>
-					</p>
+					</span>
 				{/if}
 				{#if episode.description}
 					<div class="p-2">{@html episode.description}</div>
 				{:else}
-					<p>
+					<span class="inline-block">
 						⛔️ Description is missing <button
-							class="btn variant-ghost"
+							class="btn variant-ghost block sm:inline-block"
 							on:click={() => {
 								updateForm = true;
 								tabSet = 0;
 							}}>Go Update! ✨</button
 						>
-					</p>
+					</span>
 				{/if}
 				{#if episode.audio}
-					<audio preload="auto" controls src={audio} />
+					<div>
+						<audio class="w-full" preload="auto" controls src={audio} />
+					</div>
 				{:else}
-					<p>
-						⛔️ Audio is missing <button
-							class="btn variant-ghost"
+					<span class="inline-block">
+						<span> ⛔️ Audio is missing </span>
+						<button
+							class="btn variant-ghost block sm:inline-block"
 							on:click={() => {
 								updateForm = true;
 								tabSet = 2;
 							}}>Go Update! ✨</button
 						>
-					</p>
+					</span>
 				{/if}
 				{#if episode.image}
 					<img src={image} alt="" />
 				{:else}
-					<p>
+					<span class="inline-block">
 						⛔️ Image is missing <button
-							class="btn variant-ghost"
+							class="btn variant-ghost block sm:inline-block"
 							on:click={() => {
 								updateForm = true;
 								tabSet = 1;
 							}}>Go Update! ✨</button
 						>
-					</p>
+					</span>
 				{/if}
 			</div>
 
-			<div class="py-10">
+			<!-- <div class="py-2 sm:py-10">
 				<Accordion
 					regionPanel="variant-ghost-tertiary"
 					hover="variant-ghost-secondary hover:variant-ghost-primary"
@@ -147,7 +150,7 @@
 						</svelte:fragment>
 					</AccordionItem>
 				</Accordion>
-			</div>
+			</div> -->
 		</div>
 	{/if}
 </div>

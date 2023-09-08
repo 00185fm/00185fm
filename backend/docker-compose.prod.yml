@@ -162,6 +162,10 @@ services:
         - PUBLIC_DEFAUL_ART
         - PUBLIC_RADIO_URL
         - PRIVATE_LIQUIDSOAP
+        - LIVE_PORT
+        - LIVE_PASSWORD
+        - LIVE_MOUNTPOINT
+        - PUBLIC_LIQ_URL
     container_name: app
     restart: always
     environment:
@@ -174,6 +178,10 @@ services:
       - PUBLIC_DEFAUL_ART
       - PUBLIC_RADIO_URL
       - PRIVATE_LIQUIDSOAP
+      - LIVE_PORT
+      - LIVE_PASSWORD
+      - LIVE_MOUNTPOINT
+      - PUBLIC_LIQ_URL
     networks:
       - traefik-net
     ports:

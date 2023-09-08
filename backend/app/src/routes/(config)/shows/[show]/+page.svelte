@@ -75,16 +75,16 @@
 	let lock_delete = false;
 </script>
 
-<div class="container mx-auto p-10">
-	<div class="flex justify-between">
-		<h2 class="h2 p-5">{show.title} w/ {show.author}</h2>
-		<div class="btn-group-vertical variant-ghost mt-auto mb-auto">
+<div class="container mx-auto p-2 sm:p-10">
+	<div class="sm:flex sm:justify-between text-center sm:text-left">
+		<h2 class="h2 p-4">{show.title} w/ {show.author}</h2>
+		<div class="btn-group sm:btn-group-vertical variant-ghost mt-auto mb-auto">
 			<button
-				class=" variant-ghost"
+				class="variant-ghost"
 				on:click={() => ((createForm = !createForm), (updateForm = false))}>Create</button
 			>
 			<button
-				class=" variant-ghost-secondary"
+				class="variant-ghost-secondary"
 				on:click={() => ((updateForm = !updateForm), (createForm = false))}>Update</button
 			>
 			<button
@@ -96,7 +96,7 @@
 						deleteModal();
 					}
 				}}
-				class=" variant-filled-error">Delete</button
+				class="variant-filled-error">Delete</button
 			>
 		</div>
 	</div>
@@ -112,7 +112,7 @@
 	{/if}
 	{#if episodes.length > 0}
 		<div class="my-2">
-			<h3 class="h3">Play all episodes from this show</h3>
+			<h3 class="h3 text-center sm:text-left">Play all episodes from this show</h3>
 			<audio class="w-full" bind:this={showPlayer} src={data.audioUrls[0]} controls />
 		</div>
 		<input
@@ -122,7 +122,7 @@
 			bind:value={$searchStore.search}
 		/>
 
-		<div class="p-5 float-right">
+		<div class="p-5 sm:float-right">
 			<RadioGroup
 				class="w-full"
 				active="variant-ghost-primary"
@@ -154,7 +154,7 @@
 				{/each}
 			</div>
 		{:else}
-			<div class="grid md:grid-flow-row lg:grid-cols-4 gap-2">
+			<div class="grid sm:grid-flow-row lg:grid-cols-4 gap-2">
 				{#each $searchStore.filtered as episode}
 					{#if showIncomplete}
 						{#if checkEmpty(episode).length > 0}

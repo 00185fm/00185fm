@@ -41,21 +41,21 @@
 	});
 </script>
 
-<div class="container mx-auto p-10">
-	<div class="flex justify-between">
-		<h2 class="h2 p-5">Tags</h2>
+<div class="container mx-auto p-2 sm:p-10">
+	<div class="text-center sm:text-left sm:flex sm:justify-between">
+		<h2 class="h2 p-4">Tags</h2>
 		<input
-			class="input mx-10 my-5"
+			class="input sm:mx-10 sm:my-5"
 			type="search"
 			placeholder="Search..."
 			bind:value={$searchStore.search}
 		/>
-		<div class="btn variant-ghost m-5">
+		<div class="btn variant-ghost m-2 sm:m-5">
 			<button on:click={() => (newForm = !newForm)}>New</button>
 		</div>
 	</div>
 
-	<div class="p-4">
+	<div class="p-4 text-center">
 		<p>
 			Here you can easily find and delete tags. Go to episode's page for assign the tag to that
 			episode (you can even create new ones from there)
@@ -85,13 +85,15 @@
 			<span>By clicking on the ' 𝗫 ' you will delete the tag. Please be careful</span>
 			<span class="text-red-500">⚠️</span>
 		</div>
-		{#each $searchStore.filtered as tag}
-			<DeleteChip
-				action={'?/delete&id=' + tag?.id}
-				submit={tag?.tag}
-				class_str={'chip variant-ghost-tertiary hover:variant-ghost-primary p-2 mr-2'}
-			/>
-		{/each}
+		<div class="text-center">
+			{#each $searchStore.filtered as tag}
+				<DeleteChip
+					action={'?/delete&id=' + tag?.id}
+					submit={tag?.tag}
+					class_str={'chip variant-ghost-tertiary hover:variant-ghost-primary p-2 mr-2'}
+				/>
+			{/each}
+		</div>
 	{:else}
 		<div class="p-4 text-center">
 			<span class="text-red-500">⚠️</span>

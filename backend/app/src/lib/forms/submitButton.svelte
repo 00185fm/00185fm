@@ -16,7 +16,7 @@
 	}
 </script>
 
-<div class="flex justify-end">
+<div class="text-center sm:flex sm:justify-end">
 	<button type="submit" class={className} {disabled}>
 		<slot>{field}</slot>
 	</button>
