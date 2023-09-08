@@ -25,7 +25,7 @@ to_live = ref(false)
 ignore(to_live)
 
 
-radio_api_url = getenv("PB_NP")
+radio_api_url = getenv("PB_LOCAL_NP")
 api_token = getenv("LIQ_TOKEN")
 
 def radio_api_post(~timeout_ms=2000, payload) =

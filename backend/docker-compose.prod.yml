@@ -128,7 +128,7 @@ services:
       - LIQ_TOKEN
       - LIVE_PORT
       - LOCAL_PORT
-      - PB_NP
+      - PB_LOCAL_NP
       - PB_DEF_PLAYLIST
     depends_on:
       - pocketbase
@@ -157,6 +157,7 @@ services:
       args:
         - PUBLIC_NP_ID
         - PUBLIC_DEF_PLAYLIST_ID
+        - PRIVATE_POCKETBASE_URL
         - PUBLIC_POCKETBASE_URL
         - PUBLIC_DEFAUL_ART
         - PUBLIC_RADIO_URL
@@ -168,6 +169,7 @@ services:
       - BODY_SIZE_LIMIT=0
       - PUBLIC_NP_ID
       - PUBLIC_DEF_PLAYLIST_ID
+      - PRIVATE_POCKETBASE_URL
       - PUBLIC_POCKETBASE_URL
       - PUBLIC_DEFAUL_ART
       - PUBLIC_RADIO_URL
