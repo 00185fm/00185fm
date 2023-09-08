@@ -25,8 +25,8 @@ to_live = ref(false)
 ignore(to_live)
 
 
-radio_api_url = "pocketbase:4090/radio/nowplaying"
-
+radio_api_url = getenv("PB_LOCAL_NP")
+api_token = getenv("LIQ_TOKEN")
 
 def radio_api_post(~timeout_ms=2000, payload) =
     
@@ -35,7 +35,8 @@ def radio_api_post(~timeout_ms=2000, payload) =
         response = http.post(radio_api_url,
             headers=[
                 ("Content-Type", "application/json"),
-                ("User-Agent", "Liquidsoap 00185fm")
+                ("User-Agent", "Liquidsoap 00185fm"),
+                ("Authorization","#{api_token}")
             ],
             timeout_ms=timeout_ms,
             data=payload
@@ -49,12 +50,12 @@ def radio_api_post(~timeout_ms=2000, payload) =
     end
 end
 
-
+pb_def_playlist = getenv("PB_DEF_PLAYLIST")
 # Playlist
 i_playlist = crossfade(
     duration=4.0,
     smart=true,
-    playlist(mode='randomize',reload=600,"http://pocketbase:4090/playlists/default.m3u")
+    playlist(mode='randomize',reload=600,pb_def_playlist)
 )
 
 # Error
@@ -84,10 +85,6 @@ live = metadata.map(insert_missing, live)
 
 radio = fallback(id="live_fallback", replay_metadata=true, [live, error])
 
-# Allow for Telnet-driven insertion of custom metadata.
-radio = server.insert_metadata(id="custom_metadata", radio)
-
-
 # Apply amplification metadata (if supplied)
 radio = amplify(override="liq_amplify", 1., radio)
 
@@ -112,7 +109,7 @@ def skip_next(~protocol,~data,~headers,uri) =
     )
 end
 
-harbor.http.register(port=4080,method="GET","/nextsong",skip_next)
+harbor.http.register(port=4085,method="GET","/nextsong",skip_next)
 
 
 # Send metadata changes back to Server

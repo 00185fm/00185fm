@@ -2,24 +2,31 @@ routerAdd(
   "POST",
   "/radio/nowplaying",
   (c) => {
-    const np = new DynamicModel({
-      title: "Title",
-      artist: "Artist",
-      is_live: false,
-      slug: "",
-    });
-    c.bind(np);
-    try {
-      const record = $app.dao().findRecordById("nowplaying", "l40t8v7wx6uyynf");
-      record.set("title", np.title);
-      record.set("artist", np.artist);
-      record.set("is_live", np.is_live);
-      record.set("slug", np.slug);
-      $app.dao().saveRecord(record);
-    } catch (error) {
-      return c.json(404, { message: "Error!", error });
+    const token = c.request().header.get("Authorization");
+    if (token === $os.getenv("LIQ_TOKEN")) {
+      const np = new DynamicModel({
+        title: "Title",
+        artist: "Artist",
+        is_live: false,
+        slug: "",
+      });
+      c.bind(np);
+      try {
+        const record = $app
+          .dao()
+          .findRecordById("nowplaying", $os.getenv("NOW_PLAYING_ID"));
+        record.set("title", np.title);
+        record.set("artist", np.artist);
+        record.set("is_live", np.is_live);
+        record.set("slug", np.slug);
+        $app.dao().saveRecord(record);
+      } catch (error) {
+        return c.json(404, { message: "Error!", error });
+      }
+      return c.json(200, { message: "Well done!" });
+    } else {
+      return c.json(404, { message: "Not Authorized" });
     }
-    return c.json(200, { message: "Well done!" });
   } /* optional middlewares */
 );
 
@@ -61,7 +68,6 @@ routerAdd("GET", "/playlists/:title", (c) => {
       if (e.getString("audio") !== "") {
         const title = e.getString("title").clean();
         const artist = e.getString("author").clean();
-        const audio = e.getString("audio");
 
         string +=
           "#EXTINF:" +
@@ -74,10 +80,9 @@ routerAdd("GET", "/playlists/:title", (c) => {
           "slug='" +
           e.getString("slug") +
           "'," +
-          "\nhttp://pocketbase:4090/api/files/" +
+          "\n" +
+          $os.getenv("PB_FILES_URL") +
           collection.id +
-          // "\n" +
-          // $app.dao().getUrl(e, audio);
           "/" +
           e.getString("id") +
           "/" +

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { pb } from '$lib/pocketbase';
 	import UpdateEpisode from '$lib/components/crud/updateEpisode.svelte';
 	import {
 		getModalStore,
@@ -20,6 +19,8 @@
 	$: tags = data.tags;
 	$: episodePlaylists = episode.expand?.playlists || [];
 	$: episodeTags = episode.expand?.tags || [];
+	$: image = data.image;
+	$: audio = data.audio;
 	function deleteModal(): void {
 		const c: ModalComponent = { ref: Delete };
 		const modal: ModalSettings = {
@@ -33,9 +34,6 @@
 	}
 
 	let updateForm = false;
-
-	$: image = pb.files.getUrl(episode, episode.image, { thumb: '1000x1000' });
-	$: audio = pb.files.getUrl(episode, episode.audio);
 </script>
 
 <div class="container mx-auto p-10">

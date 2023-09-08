@@ -1,4 +1,10 @@
 import type { RecordModel } from 'pocketbase';
+import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+
+export const file_url = (id: string, filename: string, thumb: string) => {
+	const url = PUBLIC_POCKETBASE_URL + '/api/files/episodes/' + id + '/' + filename + thumb;
+	return url;
+};
 
 export const checkEmpty = (i: any): string[] => {
 	const empty: string[] = [];
