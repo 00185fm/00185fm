@@ -28,11 +28,11 @@
 	});
 </script>
 
-<div class="container mx-auto p-10">
-	<div class="flex justify-between">
-		<h2 class="h2 p-5">{playlist?.title}</h2>
+<div class="container mx-auto p-2 sm:p-10">
+	<div class="text-center sm:flex sm:justify-between">
+		<h2 class="h2 p-4">{playlist?.title}</h2>
 		<input
-			class="input mx-10 my-5"
+			class="input sm:mx-10 sm:my-5"
 			type="search"
 			placeholder="Search..."
 			bind:value={$searchStore.search}
@@ -46,13 +46,15 @@
 			>
 			<span class="text-red-500">⚠️</span>
 		</div>
-		{#each $searchStore.filtered as e}
-			<DeleteChip
-				action={'?/delete&e_id=' + e.id + '&p_id=' + playlist.id}
-				submit={e?.title}
-				class_str={'chip variant-ghost-tertiary hover:variant-ghost-primary p-2 m-1'}
-			/>
-		{/each}
+		<div class="text-center">
+			{#each $searchStore.filtered as e}
+				<DeleteChip
+					action={'?/delete&e_id=' + e.id + '&p_id=' + playlist.id}
+					submit={e?.title}
+					class_str={'chip variant-ghost-tertiary hover:variant-ghost-primary p-2 m-1'}
+				/>
+			{/each}
+		</div>
 	{:else}
 		<div class="p-4 text-center">
 			<span class="text-red-500">⚠️</span>

@@ -17,7 +17,6 @@
 	let imageUrl: string | ArrayBuffer | null = '';
 
 	$: percent = 0;
-	let player: HTMLAudioElement = new Audio();
 	const uploadFile = async () => {
 		try {
 			let formData = new FormData();
@@ -104,7 +103,7 @@
 		{#if uploadItems.find((i) => i === 'image')}
 			<div>
 				<h3>Image</h3>
-				{#if imageFile}
+				{#if imageFile !== undefined}
 					<div class="card">
 						<header class="card-header text-xl font-bold text-center">
 							{imageFile[0].name}
@@ -136,7 +135,7 @@
 		{#if uploadItems.find((i) => i === 'audio')}
 			<div>
 				<h3>Audio</h3>
-				{#if audioFile}
+				{#if audioFile !== undefined}
 					<div class="card">
 						<header class="card-header text-xl font-bold text-center">
 							{audioFile[0].name}

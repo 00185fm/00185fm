@@ -9,7 +9,7 @@
 	import CalendarClock from '$lib/icons/calendar-clock.svelte';
 </script>
 
-<AppRail>
+<AppRail width="w-15 sm:w-20">
 	<svelte:fragment slot="lead">
 		<AppRailAnchor href="/" selected={$page.url.pathname === '/'}>
 			<svelte:fragment slot="lead">
