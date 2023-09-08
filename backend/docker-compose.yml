@@ -61,14 +61,14 @@ services:
       - LIQ_TOKEN
       - LIVE_PORT
       - LOCAL_PORT
-      - PB_NP
+      - PB_LOCAL_NP
       - PB_DEF_PLAYLIST
     depends_on:
       - pocketbase
       - icecast
     ports:
-      - "${LIVE_PORT:-4085}:4085"
-      - "${LOCAL_PORT:-4080}:4080"
+      - "${LIVE_PORT:-4080}:4080"
+      - "${LOCAL_PORT:-4085}:4085"
     volumes:
       - ./pocketbase/pb_public/:/pb_public:ro
       - ./liquidsoap/settings.liq:/settings.liq:ro

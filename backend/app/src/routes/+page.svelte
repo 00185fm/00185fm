@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { PUBLIC_NP_ID } from '$env/static/public';
+	import PocketBase from 'pocketbase';
+	import { PUBLIC_NP_ID, PUBLIC_POCKETBASE_URL } from '$env/static/public';
 	import Nowplaying from '$lib/components/nowplaying.svelte';
-	import { pb } from '$lib/pocketbase';
+	const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 	import { onMount, onDestroy } from 'svelte';
 	import type { ActionData } from './$types';
 	export let form: ActionData;
