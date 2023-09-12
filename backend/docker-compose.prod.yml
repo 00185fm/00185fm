@@ -51,8 +51,13 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.18.1
-    command: ["./pocketbase", "serve", "--http=0.0.0.0:${PB_PORT}"]
+        - PB_VERSION=0.18.4
+    command:
+      [
+        "./pocketbase",
+        "serve",
+        "--http=0.0.0.0:${PB_PORT} --origins=00185fm.eu,*.00185fm.eu",
+      ]
     container_name: pocketbase
     restart: always
     depends_on:

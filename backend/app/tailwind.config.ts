@@ -59,7 +59,8 @@ const config = {
 			themes: {
 				preset: ['crimson']
 			}
-		})
+		}),
+		require('@tailwindcss/typography')
 	]
 } satisfies Config;
 
