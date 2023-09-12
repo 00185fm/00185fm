@@ -51,7 +51,7 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.18.4
+        - PB_VERSION=0.18.5
     command:
       [
         "./pocketbase",
@@ -70,6 +70,7 @@ services:
     environment:
       - NOW_PLAYING_ID
       - LIQ_TOKEN
+      - PRIVATE_POCKETBASE_TOKEN
       - PB_FILES_URL
     volumes:
       - ./pocketbase/pb_data:/pb/pb_data
@@ -172,6 +173,7 @@ services:
         - LIVE_PASSWORD
         - LIVE_MOUNTPOINT
         - PUBLIC_LIQ_URL
+        - PRIVATE_POCKETBASE_TOKEN
     container_name: app
     restart: always
     environment:
@@ -188,6 +190,7 @@ services:
       - LIVE_PASSWORD
       - LIVE_MOUNTPOINT
       - PUBLIC_LIQ_URL
+      - PRIVATE_POCKETBASE_TOKEN
     networks:
       - traefik-net
     ports:
