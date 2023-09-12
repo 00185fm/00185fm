@@ -1,15 +1,3 @@
-onRecordsListRequest((e) => {
-  const token = e.httpContext.request().header.get("Authorization");
-  if (token !== $os.getenv("PRIVATE_POCKETBASE_TOKEN")) {
-    e.result.items = [];
-  }
-});
-onRecordViewRequest((e) => {
-  const token = e.httpContext.request().header.get("Authorization");
-  if (token !== $os.getenv("PRIVATE_POCKETBASE_TOKEN")) {
-    e.result.items = [];
-  }
-});
 routerAdd(
   "POST",
   "/radio/nowplaying",
@@ -108,19 +96,3 @@ routerAdd("GET", "/playlists/:title", (c) => {
 
   return c.string(200, string);
 });
-
-// function guestMiddleware(next) {
-//   return (c) => {
-//     // eg. inspect some header value before processing the request
-//     const token = c.request().header.get("x-authorization");
-//     console.log(JSON.stringify(token));
-//     if (token !== $os.getenv("PRIVATE_POCKETBASE_TOKEN")) {
-//       // throw or return an error
-//       throw new BadRequestError("Invalid request");
-//     }
-
-//     return next(c); // proceed with the request chain
-//   };
-// }
-
-// routerUse(guestMiddleware);

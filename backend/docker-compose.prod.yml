@@ -52,11 +52,11 @@ services:
       args:
         - PB_PORT
         - PB_VERSION=0.18.5
-    command:
-      [
+    command: [
         "./pocketbase",
         "serve",
-        "--http=0.0.0.0:${PB_PORT}",
+        # "--http=0.0.0.0:${PB_PORT}",
+        "pb.00185fm.eu",
         "--origins=00185fm.eu,*.00185fm.eu",
       ]
     container_name: pocketbase
@@ -70,7 +70,6 @@ services:
     environment:
       - NOW_PLAYING_ID
       - LIQ_TOKEN
-      - PRIVATE_POCKETBASE_TOKEN
       - PB_FILES_URL
     volumes:
       - ./pocketbase/pb_data:/pb/pb_data
@@ -81,7 +80,7 @@ services:
       - "traefik.http.routers.pocketbase.rule=Host(`pb.00185fm.eu`)"
       - "traefik.http.routers.pocketbase.entrypoints=websecure"
       - "traefik.http.routers.pocketbase.tls.certresolver=letsencrypt"
-      - "traefik.http.services.pocketbase.loadbalancer.server.port=4090"
+      - "traefik.http.services.pocketbase.loadbalancer.server.port=443"
       - "traefik.docker.network=traefik-net"
     healthcheck: #optional (recommended) since v0.10.0
       test: wget --no-verbose --tries=1 --spider http://localhost:4090/api/health || exit 1
@@ -173,7 +172,6 @@ services:
         - LIVE_PASSWORD
         - LIVE_MOUNTPOINT
         - PUBLIC_LIQ_URL
-        - PRIVATE_POCKETBASE_TOKEN
     container_name: app
     restart: always
     environment:
@@ -190,7 +188,6 @@ services:
       - LIVE_PASSWORD
       - LIVE_MOUNTPOINT
       - PUBLIC_LIQ_URL
-      - PRIVATE_POCKETBASE_TOKEN
     networks:
       - traefik-net
     ports:

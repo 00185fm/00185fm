@@ -16,7 +16,6 @@ services:
     environment:
       - NOW_PLAYING_ID
       - LIQ_TOKEN
-      - PRIVATE_POCKETBASE_TOKEN
       - PB_FILES_URL
     volumes:
       - ./pocketbase/pb_data:/pb/pb_data

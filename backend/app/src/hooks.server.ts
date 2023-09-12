@@ -1,15 +1,7 @@
 import { pb } from '$lib/pocketbase';
 import { redirect, type Handle } from '@sveltejs/kit';
-import { PRIVATE_POCKETBASE_TOKEN } from '$env/static/private';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	pb.beforeSend = function (url, options) {
-		options.headers = Object.assign({}, options.headers, {
-			Authorization: PRIVATE_POCKETBASE_TOKEN
-		});
-
-		return { url, options };
-	};
 	pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
 	if (pb.authStore.isValid) {
 		try {
