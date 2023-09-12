@@ -56,7 +56,8 @@ services:
       [
         "./pocketbase",
         "serve",
-        "--http=0.0.0.0:${PB_PORT} --origins=00185fm.eu,*.00185fm.eu",
+        "--http=0.0.0.0:${PB_PORT}",
+        "--origins=00185fm.eu,*.00185fm.eu",
       ]
     container_name: pocketbase
     restart: always
