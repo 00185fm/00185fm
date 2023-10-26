@@ -2,14 +2,14 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - "dev"
+      - dev
     paths:
-      - "frontend/**"
+      - frontend/**
   pull_request:
     branches:
-      - "main"
+      - main
     paths:
-      - "frontend/**"
+      - frontend/**
 jobs:
   copy_repo_to_another:
     runs-on: ubuntu-latest
