@@ -4,12 +4,14 @@
 	import Nowplaying from '$lib/components/nowplaying.svelte';
 	import Live from '$lib/components/live.svelte';
 	import Github from '$lib/components/github.svelte';
+	import Gitapi from '$lib/components/gitapi.svelte';
 	const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 	import { onMount, onDestroy } from 'svelte';
 	import type { ActionData } from './$types';
 	export let form: ActionData;
 
 	export let data;
+	const { issue } = data;
 	let { np } = data;
 	onMount(async () => {
 		pb.collection('nowplaying').subscribe(PUBLIC_NP_ID, function ({ action, record }) {
@@ -30,4 +32,5 @@
 	<Nowplaying {np} {form} />
 	<Live livestream={data.livestream} />
 	<Github />
+	<Gitapi {issue} />
 </div>

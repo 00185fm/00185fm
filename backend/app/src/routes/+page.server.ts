@@ -5,6 +5,10 @@ import { PUBLIC_NP_ID, PUBLIC_LIQ_URL } from '$env/static/public';
 
 export const load: ServerLoad = async ({ locals }) => {
 	if (!locals?.user) throw redirect(302, '/login');
+	const gitIssue = `https://api.github.com/repos/00185fm/00185fm/issues/1`;
+	const res = await fetch(gitIssue);
+	const issue: string = structuredClone((await res.json()).body);
+
 	const livestream = {
 		url: PUBLIC_LIQ_URL,
 		mount: '/' + LIVE_MOUNTPOINT,
@@ -20,7 +24,7 @@ export const load: ServerLoad = async ({ locals }) => {
 		is_live: record.is_live,
 		slug: record.slug
 	};
-	return { np, user: locals.user, livestream };
+	return { np, user: locals.user, livestream, issue };
 };
 
 export const actions: Actions = {

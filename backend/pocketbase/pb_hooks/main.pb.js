@@ -9,6 +9,7 @@ routerAdd(
         artist: "Artist",
         is_live: false,
         slug: "",
+        id: "",
       });
       c.bind(np);
       try {
@@ -19,6 +20,7 @@ routerAdd(
         record.set("artist", np.artist);
         record.set("is_live", np.is_live);
         record.set("slug", np.slug);
+        record.set("episode", np.id);
         $app.dao().saveRecord(record);
       } catch (error) {
         return c.json(404, { message: "Error!", error });
@@ -79,6 +81,9 @@ routerAdd("GET", "/playlists/:title", (c) => {
           "'," +
           "slug='" +
           e.getString("slug") +
+          "'," +
+          "id='" +
+          e.getString("id") +
           "'," +
           "\n" +
           $os.getenv("PB_FILES_URL") +

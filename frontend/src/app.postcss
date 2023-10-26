@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: 'Basteleur';
+	src: local('Basteleur Moonlight'), local('Basteleur-Moonlight'), local('basteleur moonlight'),
+		local('basteleur-moonlight'), url('/fonts/basteleur/Basteleur-Moonlight.otf');
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Basteleur Bold';
+	src: local('Basteleur Bold'), local('Basteleur-Bold'), local('basteleur bold'),
+		local('basteleur-bold'), url('/fonts/basteleur/Basteleur-Bold.woff'),
+		url('/fonts/basteleur/Basteleur-Bold.woff2');
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'PicNic';
+	src: local('PicNic'), local('picnic'), url('/fonts/picnic/PicNic-Regular.woff'),
+		url('/fonts/picnic/PicNic-Regular.woff2');
+	font-weight: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Myriad Regular';
+	src: local('Myriad Pro'), local('myriad pro'), url('/fonts/myriadpro/MYRIADPRO-REGULAR.woff');
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Myriad Semibold';
+	src: local('Myriad Pro Semibold'), local('myriad pro semibold'),
+		url('/fonts/myriadpro/MYRIADPRO-SEMIBOLD.woff');
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Myriad Bold';
+	src: local('Myriad Pro Bold'), local('myriad pro bold'),
+		url('/fonts/myriadpro/MYRIADPRO-BOLD.woff');
+	font-weight: normal;
+	font-display: swap;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 0.1s;
+}
+
+html,
+body {
+	@apply h-full;
+}
+html {
+	background: rgb(244, 230, 245);
+	background: -moz-linear-gradient(
+		90deg,
+		rgba(244, 230, 245, 1) 0%,
+		rgba(244, 236, 250, 1) 22%,
+		rgba(242, 245, 252, 1) 29%,
+		rgba(242, 245, 252, 1) 36%,
+		rgba(244, 247, 252, 1) 46%,
+		rgba(249, 247, 252, 1) 52%,
+		rgba(251, 248, 251, 1) 56%,
+		rgba(253, 254, 248, 1) 61%,
+		rgba(246, 254, 246, 1) 69%,
+		rgba(246, 254, 245, 1) 77%,
+		rgba(241, 254, 242, 1) 82%,
+		rgba(240, 255, 241, 1) 85%,
+		rgba(237, 254, 240, 1) 91%,
+		rgba(232, 255, 235, 1) 100%
+	);
+	background: -webkit-linear-gradient(
+		90deg,
+		rgba(244, 230, 245, 1) 0%,
+		rgba(244, 236, 250, 1) 22%,
+		rgba(242, 245, 252, 1) 29%,
+		rgba(242, 245, 252, 1) 36%,
+		rgba(244, 247, 252, 1) 46%,
+		rgba(249, 247, 252, 1) 52%,
+		rgba(251, 248, 251, 1) 56%,
+		rgba(253, 254, 248, 1) 61%,
+		rgba(246, 254, 246, 1) 69%,
+		rgba(246, 254, 245, 1) 77%,
+		rgba(241, 254, 242, 1) 82%,
+		rgba(240, 255, 241, 1) 85%,
+		rgba(237, 254, 240, 1) 91%,
+		rgba(232, 255, 235, 1) 100%
+	);
+	background: linear-gradient(
+		90deg,
+		rgba(244, 230, 245, 1) 0%,
+		rgba(244, 236, 250, 1) 22%,
+		rgba(242, 245, 252, 1) 29%,
+		rgba(242, 245, 252, 1) 36%,
+		rgba(244, 247, 252, 1) 46%,
+		rgba(249, 247, 252, 1) 52%,
+		rgba(251, 248, 251, 1) 56%,
+		rgba(253, 254, 248, 1) 61%,
+		rgba(246, 254, 246, 1) 69%,
+		rgba(246, 254, 245, 1) 77%,
+		rgba(241, 254, 242, 1) 82%,
+		rgba(240, 255, 241, 1) 85%,
+		rgba(237, 254, 240, 1) 91%,
+		rgba(232, 255, 235, 1) 100%
+	);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f4e6f5",endColorstr="#e8ffeb",GradientType=1);
+}
+
+.text-stroke {
+	color: transparent;
+	-webkit-text-stroke: 1px black;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+.box-shadow {
+	box-shadow:
+		-23px 23px 93px #adadad,
+		23px -23px 93px #ffffff;
+}

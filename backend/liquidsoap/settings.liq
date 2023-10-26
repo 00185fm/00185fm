@@ -24,7 +24,6 @@ ignore(live_enabled)
 to_live = ref(false)
 ignore(to_live)
 
-
 radio_api_url = getenv("PB_LOCAL_NP")
 api_token = getenv("LIQ_TOKEN")
 
@@ -111,7 +110,6 @@ end
 
 harbor.http.register(port=4085,method="GET","/nextsong",skip_next)
 
-
 # Send metadata changes back to Server
 last_title = ref("")
 last_artist = ref("")
@@ -121,24 +119,16 @@ def metadata_updated(m) =
         if (m["title"] != !last_title or m["artist"] != !last_artist) then
             last_title := m["title"]
             last_artist := m["artist"]
-            
             j = json()
-            
-            if (m["song_id"] != "") then
-                j.add("song_id", m["song_id"])
-                j.add("media_id", m["media_id"])
-                j.add("playlist_id", m["playlist_id"])
+            j.add("artist", m["artist"])
+            j.add("title", m["title"])
+            j.add("slug", m["slug"])
+            j.add("id", m["id"])
+            if(m["is_live"] == "true") then
+                j.add("is_live", true)
             else
-                j.add("artist", m["artist"])
-                j.add("title", m["title"])
-                j.add("slug", m["slug"])
-                if(m["is_live"] == "true") then
-                    j.add("is_live", true)
-                else
-                    j.add("is_live", false)
-                end
+                j.add("is_live", false)
             end
-            
             _ = radio_api_post(
                 json.stringify(j)
             )

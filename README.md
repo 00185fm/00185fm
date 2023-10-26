@@ -10,7 +10,7 @@
 
 ### Admin
 
-- Pocketbase v0.18.1
+- Pocketbase v0.18.6
 
   #### Admin UI
 
@@ -26,4 +26,4 @@
 
 - SvelteKit
 
-- SkeletonUI
+- Tailwind CSS
