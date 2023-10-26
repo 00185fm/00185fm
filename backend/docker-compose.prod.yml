@@ -13,8 +13,8 @@ services:
       - "--providers.docker"
       # Only enabled containers should be exposed
       - "--providers.docker.exposedByDefault=false"
-      # Disabling the dashbaord
-      - "--api.dashboard=false"
+      # Enabling the dashbaord
+      - "--api.dashboard=true"
       - "--api.insecure=false"
       # The entrypoints we want to expose
       - "--entrypoints.web.address=:80"
@@ -33,7 +33,8 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
     networks:
-      - traefik-net
+      traefik-net:
+        ipv4_address: 10.5.0.5
     environment:
       - CF_API_EMAIL
       - CF_DNS_API_TOKEN
@@ -44,6 +45,16 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.00185fm.eu`)"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.middlewares.auth.basicauth.users=admin:$$2y$$10$$uqn3hdw6jNgmCICjfOWvfezl3yxJ7iHe1b47NPGgx0yUVkApIBt.S"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
+      - "traefik.docker.network=traefik-net"
 
   ################ POCKETBASE
   pocketbase:
@@ -51,27 +62,27 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.18.5
-    command:
-      [
+        - PB_VERSION=0.19.0
+    command: [
         "./pocketbase",
         "serve",
         "--http=0.0.0.0:${PB_PORT}",
-        "--origins=00185fm.eu,*.00185fm.eu",
+        # "--origins=${ALLOWED_ORIGINS}",
       ]
     container_name: pocketbase
     restart: always
     depends_on:
       - traefik
     networks:
-      - traefik-net
+      traefik-net:
+        ipv4_address: 10.5.0.10
     ports:
       - ${PB_PORT}:${PB_PORT}
     environment:
       - NOW_PLAYING_ID
       - LIQ_TOKEN
       - PB_FILES_URL
-      - STATIC_IP
+      - ALLOWED_ORIGINS
     volumes:
       - ./pocketbase/pb_data:/pb/pb_data
       - ./pocketbase/pb_hooks:/pb/pb_hooks
@@ -83,7 +94,20 @@ services:
       - "traefik.http.routers.pocketbase.tls.certresolver=letsencrypt"
       - "traefik.http.services.pocketbase.loadbalancer.server.port=4090"
       - "traefik.docker.network=traefik-net"
-      - "traefik.http.middlewares.pb-ipwhitelist.ipwhitelist.sourcerange={STATIC_IP}, 192.168.0.1/32, 127.0.0.1/32"
+      ####IMPORTANT
+      - "traefik.http.middlewares.ratelimit.ratelimit.average=200"
+      - "traefik.http.middlewares.ratelimit.ratelimit.burst=80"
+      - "traefik.http.middlewares.ratelimit.ratelimit.sourcecriterion.ipstrategy.excludedips=10.5.0.0/16"
+      - "traefik.http.routers.pocketbase.middlewares=ratelimit"
+      ####IMPORTANT
+      # - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
+      # - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
+      # - "traefik.http.middlewares.cors.headers.addvaryheader=true"
+      # - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=${ALLOWED_ORIGINS}"
+      # - "traefik.http.routers.pocketbase.middlewares=cors"
+      # - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=10.5.0.0/16"
+      # - "traefik.http.middlewares.ipwhitelist.ipwhitelist.ipstrategy.depth=1"
+      # - "traefik.http.routers.pocketbase.middlewares=ipwhitelist@docker"
     healthcheck: #optional (recommended) since v0.10.0
       test: wget --no-verbose --tries=1 --spider http://localhost:4090/api/health || exit 1
       interval: 5s
@@ -107,7 +131,8 @@ services:
       - ICECAST_PASSWORD
       - ICECAST_RELAY_PASSWORD
     networks:
-      - traefik-net
+      traefik-net:
+        ipv4_address: 10.5.0.15
     ports:
       - ${ICECAST_PORT:-4040}:8000
     labels:
@@ -143,7 +168,8 @@ services:
       - icecast
       - traefik
     networks:
-      - traefik-net
+      traefik-net:
+        ipv4_address: 10.5.0.20
     ports:
       - "${LIVE_PORT:-4080}:4080"
       - "${LOCAL_PORT:-4085}:4085"
@@ -191,7 +217,8 @@ services:
       - LIVE_MOUNTPOINT
       - PUBLIC_LIQ_URL
     networks:
-      - traefik-net
+      traefik-net:
+        ipv4_address: 10.5.0.30
     ports:
       - "4000:4000"
     labels:
@@ -212,3 +239,8 @@ volumes:
 
 networks:
   traefik-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
