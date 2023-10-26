@@ -9,13 +9,18 @@ import { file_url } from '$lib/client/utility';
 
 export const load = async ({ parent, params, locals, cookies }) => {
 	if (!locals?.user) throw redirect(302, '/login');
-	const cookiesParsed = JSON.parse(cookies.get('pb_auth'));
+	const cookiesParsed = JSON.parse(cookies.get('pb_auth') || '{}');
 	const playlists = structuredClone(await pb.collection(Collections.Playlists).getFullList());
 	const tags = structuredClone(await pb.collection(Collections.Tags).getFullList());
 	const form = await superValidate(updateEpisode);
 	const episodes = (await parent()).episodes;
-	const episode: RecordModel = episodes.find((i) => i.slug.split('/')[1] === params.episode);
+	const episode: RecordModel | undefined = episodes.find(
+		(i) => i.slug.split('/')[1] === params.episode
+	);
 
+	if (!episode) {
+		throw redirect(302, '/shows/' + params.show);
+	}
 	const audio = file_url(episode.id, episode.audio, '');
 	const image = file_url(episode.id, episode.image, '?thumb=1000x1000');
 	return { episode, form, token: cookiesParsed.token, playlists, tags, image, audio };
@@ -65,7 +70,7 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const playlistsStrArr = data.getAll('chips');
 		const episodeId: string = String(data.get('id')) || '';
-		let playlists: string[] = [];
+		const playlists: string[] = [];
 		try {
 			if (playlistsStrArr.length > 0) {
 				for (let i = 0; i < playlistsStrArr.length; i++) {
@@ -92,7 +97,7 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const tagsStrArr = data.getAll('chips');
 		const episodeId: string = String(data.get('id')) || '';
-		let tags: string[] = [];
+		const tags: string[] = [];
 
 		try {
 			if (tagsStrArr.length > 0) {

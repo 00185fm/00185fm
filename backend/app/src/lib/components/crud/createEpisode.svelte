@@ -5,13 +5,24 @@
 	import Form from '$lib/forms/form.svelte';
 	import Input from '$lib/forms/input.svelte';
 	import { newEpisode } from './schema';
+	import type { RecordModel } from 'pocketbase';
 	export let data: any;
 	let uploading = false;
 	const { token } = data;
 	export let createForm = true;
 	let lock_upload = true;
-	let openEditor: boolean = true;
-	$: created = {};
+	let openDescriptionEditor: boolean = false;
+	let openTracklistEditor: boolean = false;
+	let next_locked = false;
+	let created: RecordModel;
+	$: created;
+	$: {
+		if (openDescriptionEditor || openTracklistEditor) {
+			next_locked = true;
+		} else {
+			next_locked = false;
+		}
+	}
 	const c_superform = superForm(data.createForm, {
 		taintedMessage: null,
 		validators: newEpisode,
@@ -51,7 +62,7 @@
 				buttonNextType={'submit'}
 				buttonNextLabel={'Create'}
 				buttonBack="invisible"
-				locked={openEditor}
+				locked={next_locked}
 			>
 				<svelte:fragment slot="header">General</svelte:fragment>
 				<Input
@@ -66,17 +77,42 @@
 					info="You can choose an author different from the show's one"
 				/>
 				<Input
+					required={false}
+					type="text"
+					field="credits"
+					label="Artwork Credits"
+					info="This is the Artwork Credits field. You can use it to credit the artist who made the artwork for this episode."
+				/>
+				<Input
+					info="Should this episode be public? If you choose 'no' it will be hidden from the public website. If 'yes' it will be published on the selected date."
+					required={false}
+					type="custom"
+					field="public"
+				>
+					<div class="flex items-center">
+						<p class="px-2">Should this episode be public?</p>
+						<input type="checkbox" class="checkbox" id="public" name="public" />
+					</div>
+				</Input>
+				<Input
 					info="Choose a new date. Be accurate with hours if you can."
 					type="datetime-local"
 					field="date"
 				/>
 				<Input
-					info="<p>Use any <a href='https://00185fm.github.io/tw-editor/' target='_blank' style='text-shadow: rgb(255, 253, 0) 9px 3px 5px;' class='text-secondary-700 font-bold text-xl'>rich text to html editor</a> to customize the description styling (<a href='https://wordtohtml.net/' target='_blank' class='btn-icon btn-icon-sm variant-filled-primary'>👁</a>). Then activate the 'Editor' and copy&paste the result in the box.</p> <p class='text-sm text-red-500'>Images are not allowed yet.</p>"
+					info="<p>Use any <a href='https://00185fm.github.io/tw-editor/' target='_blank' style='text-shadow: rgb(255, 253, 0) 9px 3px 5px;' class='text-secondary-700 font-bold text-xl'>rich text to html editor</a> to customize the description styling (<a href='https://wordtohtml.net/' target='_blank' class='btn-icon btn-icon-sm variant-filled-primary'>👁</a>). Then activate the 'Edit' switch and copy&paste the result in the box.</p> <p class='text-sm text-red-500'>Images are not allowed yet.</p>"
 					required={false}
-					bind:openEditor
+					bind:openEditor={openDescriptionEditor}
 					type="textarea"
 					field="description"
-					placeholder="Write here than make the 'Editor' inactive to proceed"
+					placeholder="Write here than make the 'Edit' switch inactive to proceed"
+				/>
+				<Input
+					required={false}
+					bind:openEditor={openTracklistEditor}
+					type="textarea"
+					field="tracklist"
+					placeholder="Write here than make the 'Edit' switch inactive to proceed"
 				/>
 				<Input type="hidden" field="show" data={data.show.id} />
 				<Input type="hidden" field="show_slug" data={data.show.slug} />

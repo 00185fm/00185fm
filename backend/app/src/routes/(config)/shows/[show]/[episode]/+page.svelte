@@ -32,7 +32,6 @@
 		};
 		modalStore.trigger(modal);
 	}
-
 	let updateForm = false;
 </script>
 
@@ -72,11 +71,51 @@
 						>
 					</span>
 				{/if}
+				<p>Is {episode.public ? 'public ✅' : 'not public ⛔️'}</p>
 				{#if episode.description}
-					<div class="p-2">{@html episode.description}</div>
+					<div class="py-2">
+						<p class="text-xl font-bold">Description</p>
+						{@html episode.description}
+					</div>
 				{:else}
 					<span class="inline-block">
 						⛔️ Description is missing <button
+							class="btn variant-ghost block sm:inline-block"
+							on:click={() => {
+								updateForm = true;
+								tabSet = 0;
+							}}>Go Update! ✨</button
+						>
+					</span>
+				{/if}
+				{#if episode.tracklist}
+					<div class="py-2">
+						<p class="text-xl font-bold">Tracklist</p>
+						<p class="w-1/2 text-left">
+							{episode.tracklist}
+						</p>
+					</div>
+				{:else}
+					<span class="inline-block">
+						⛔️ Tracklist is missing <button
+							class="btn variant-ghost block sm:inline-block"
+							on:click={() => {
+								updateForm = true;
+								tabSet = 0;
+							}}>Go Update! ✨</button
+						>
+					</span>
+				{/if}
+				{#if episode.credits}
+					<div class="py-2">
+						<p class="text-xl font-bold">Artwork Credits</p>
+						<p>
+							{episode.credits}
+						</p>
+					</div>
+				{:else}
+					<span class="inline-block">
+						⛔️ Artwork Credits is missing <button
 							class="btn variant-ghost block sm:inline-block"
 							on:click={() => {
 								updateForm = true;

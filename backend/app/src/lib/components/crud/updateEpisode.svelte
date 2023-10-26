@@ -12,9 +12,18 @@
 	export let token: string;
 	export let episode: RecordModel;
 	export let updateForm: boolean;
-	let openEditor: boolean = false;
+	let openDescriptionEditor: boolean = false;
+	let openTracklistEditor: boolean = false;
+	let next_locked = false;
 	let lock_upload = false;
 	let uploading = false;
+	$: {
+		if (openDescriptionEditor || openTracklistEditor) {
+			next_locked = true;
+		} else {
+			next_locked = false;
+		}
+	}
 	const superform = superForm(form, {
 		taintedMessage: null,
 		validators: updateEpisode,
@@ -66,6 +75,26 @@
 						field="author"
 						data={episode.author}
 					/>
+					<Input
+						info="This is the Artwork Credits field. You can use it to credit the artist who made the artwork for this episode."
+						required={false}
+						type="text"
+						label="Artwork Credits"
+						field="credits"
+						data={episode.credits}
+					/>
+					<Input
+						info="Should this episode be public? If you choose 'no' it will be hidden from the public website. If 'yes' it will be published on the selected date."
+						required={false}
+						type="custom"
+						field="public"
+						data={episode.public}
+					>
+						<div class="flex items-center">
+							<p class="px-2">Should this episode be public?</p>
+							<input type="checkbox" class="checkbox" id="public" name="public" />
+						</div>
+					</Input>
 					<div class="px-4">
 						<SlideToggle size="sm" name="date-update" bind:checked={updateDate}
 							>Update Date - <span class="text-red-500 font-bold">{dateFormat(episode.date)}</span
@@ -82,14 +111,20 @@
 					<Input
 						info="<p>Use any <a href='https://00185fm.github.io/tw-editor/' target='_blank' style='text-shadow: rgb(255, 253, 0) 9px 3px 5px;' class='text-secondary-700 font-bold text-xl'>rich text to html editor</a> to customize the description styling (<a href='https://wordtohtml.net/' target='_blank' class='btn-icon btn-icon-sm variant-filled-primary'>👁</a>). Then activate the 'Editor' and copy&paste the result in the box.</p> <p class='text-sm text-red-500'>Images are not allowed yet.</p>"
 						required={false}
-						bind:openEditor
+						bind:openEditor={openDescriptionEditor}
 						type="textarea"
 						field="description"
 						data={episode.description}
 						placeholder="Write here than make the 'Editor' inactive to proceed"
 					/>
-
-					<SubmitButton disabled={openEditor} field="Update Episode" />
+					<Input
+						required={false}
+						bind:openEditor={openTracklistEditor}
+						type="textarea"
+						field="tracklist"
+						placeholder="Write here than make the 'Edit' switch inactive to proceed"
+					/>
+					<SubmitButton disabled={next_locked} field="Update Episode" />
 				</Form>
 			{:else if tabSet === 1}
 				{#if image !== ''}

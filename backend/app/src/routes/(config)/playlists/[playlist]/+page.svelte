@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { playlistsToString, tagsToString } from '$lib/client/utility.js';
 	import DeleteChip from '$lib/components/cards/deleteChip.svelte';
-	import type { EpisodesRecord } from '$lib/pocketbase/types.js';
 	export let data;
 	$: playlist = data.playlist;
 	$: episodes = data.episodes;
 
 	import { createSearchStore, searchHandler } from '$lib/stores/search';
+	import type { RecordModel } from 'pocketbase';
 	import { onDestroy } from 'svelte';
-	let searchEpisodes: EpisodesRecord[];
+	let searchEpisodes: RecordModel[];
 	let searchStore;
 	let unsubscribe: any;
 
 	$: {
-		searchEpisodes = episodes.map((episode: EpisodesRecord) => ({
+		searchEpisodes = episodes.map((episode: RecordModel) => ({
 			...episode,
 			searchTerms: `${episode.title} ${episode.author} ${tagsToString(episode)} ${playlistsToString(
 				episode

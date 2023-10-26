@@ -12,9 +12,12 @@ export const file_url = (id: string, filename: string, thumb: string) => {
 export const checkEmpty = (i: any): string[] => {
 	const empty: string[] = [];
 	for (const e in i) {
+		// eslint-disable-next-line no-prototype-builtins
 		if (i.hasOwnProperty(e)) {
 			if (!i[e] || i[e] === '') {
-				empty.push(e);
+				if (e !== 'public') {
+					empty.push(e);
+				}
 			}
 		}
 	}
