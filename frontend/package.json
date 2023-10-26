@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
-		"@sveltejs/adapter-vercel": "^3.0.3",
+		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/typography": "^0.5.10",
@@ -42,6 +42,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.18.0"
+		"pocketbase": "^0.19.0"
 	}
 }

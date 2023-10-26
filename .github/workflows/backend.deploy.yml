@@ -1,10 +1,13 @@
-name: Deploy
+name: Deploy Backend
 on:
   pull_request:
     branches:
       - main
+    paths:
+      - backend/**
+
 jobs:
-  copy:
+  copy_to_server:
     name: Pull Repository on Server
     runs-on: ubuntu-20.04
     steps:
@@ -20,8 +23,8 @@ jobs:
           # source: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
           source: .
           target: ${{ secrets.LOCAL_PATH }}
-  deploy:
-    needs: copy
+  deploy_backend:
+    needs: copy_to_server
     runs-on: ubuntu-20.04
     name: Deploy Docker Containers
     steps:
