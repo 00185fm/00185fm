@@ -1,0 +1,43 @@
+name: Deploy Backend
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - backend/**
+
+jobs:
+  copy_to_server:
+    name: Pull Repository on Server
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          # source: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+          source: .
+          target: ${{ secrets.LOCAL_PATH }}
+  deploy_backend:
+    needs: copy_to_server
+    runs-on: ubuntu-20.04
+    name: Deploy Docker Containers
+    steps:
+      # - uses: actions/checkout@v3
+      - uses: appleboy/ssh-action@v0.1.5
+        name: remote docker-compose up via ssh
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          # envs: APPTOKEN,USERNAME
+          script: |
+            cd ${{ secrets.LOCAL_PATH }}
+            docker compose -f ./backend/docker-compose.prod.yml down
+            docker compose -f ./backend/docker-compose.prod.yml up -d --build
