@@ -1,0 +1,27 @@
+name: Deploy Frontend
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/**"
+jobs:
+  copy_repo_to_another:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Main Repo
+        uses: actions/checkout@v4
+      - name: Pushes to Deploy Repo
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_FRONTEND }}
+        with:
+          source-directory: "frontend"
+          destination-github-username: "${{ secrets.DEPLOY_FRONTEND_USERNAME }}"
+          destination-repository-name: "${{ secrets.DEPLOY_FRONTEND_REPOSITORY }}"
+          user-email: ${{ secrets.DEPLOY_FRONTEND_EMAIL }}
+          target-branch: main
