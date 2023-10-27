@@ -88,7 +88,7 @@ radio = fallback(id="live_fallback", replay_metadata=true, [live, error])
 radio = amplify(override="liq_amplify", 1., radio)
 
 # Normalization and Compression
-radio = normalize(target = 0., window = 0.03, gain_min = -16., gain_max = 0., radio)
+radio = normalize(target = 0., window = 0.03, gain_min = -10., gain_max = 0., radio)
 radio = compress.exponential(radio, mu = 1.0)
 
 # Full

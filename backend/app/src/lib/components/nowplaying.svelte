@@ -46,19 +46,23 @@
 					>
 				{/if}
 			</div>
-			<div class="space-y-2">
-				<form method="POST" use:enhance>
-					<button class="btn variant-filled-primary" type="submit" formaction="?/nextsong"
-						>Skip Current</button
-					>
-				</form>
+			<div class="grid grid-cols-1 space-y-2">
+				{#if !np.is_live}
+					<form method="POST" use:enhance>
+						<button class="btn variant-filled-primary" type="submit" formaction="?/nextsong"
+							>Skip Current</button
+						>
+					</form>
+				{:else}
+					<button class="btn variant-filled-primary animate-pulse">Live Streaming</button>
+				{/if}
 				<button
 					use:clipboard={PUBLIC_RADIO_URL}
 					class="btn variant-filled"
 					on:click={onClickHandler}
 					disabled={copied}
 				>
-					{copied ? 'Copied 👍' : 'Copy Icecast Url'}
+					{copied ? 'Copied 👍' : 'Copy Stream Link'}
 				</button>
 			</div>
 		</div>

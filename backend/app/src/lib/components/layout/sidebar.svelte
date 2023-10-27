@@ -6,6 +6,7 @@
 	import ListVideo from '$lib/icons/list-video.svelte';
 	import Play from '$lib/icons/play.svelte';
 	import Tags from '$lib/icons/tags.svelte';
+	import Lightbulb from '$lib/icons/lightbulb.svelte';
 	import CalendarClock from '$lib/icons/calendar-clock.svelte';
 </script>
 
@@ -47,5 +48,11 @@
 			<CalendarClock />
 		</svelte:fragment>
 		<span>Schedules</span>
+	</AppRailAnchor>
+	<AppRailAnchor href="/about" selected={$page.url.pathname.split('/')[1] === 'about'}>
+		<svelte:fragment slot="lead">
+			<Lightbulb />
+		</svelte:fragment>
+		<span>About</span>
 	</AppRailAnchor>
 </AppRail>
