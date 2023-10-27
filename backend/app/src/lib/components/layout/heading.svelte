@@ -4,7 +4,6 @@
 	import { enhance } from '$app/forms';
 	export let currentUser: any;
 	export let page: string;
-
 </script>
 
 <AppBar>
@@ -14,13 +13,13 @@
 		</a>
 	</svelte:fragment>
 	{#if currentUser}
-		<Breadcrumb {page}/>
+		<Breadcrumb {page} />
 	{/if}
 	<svelte:fragment slot="trail">
 		{#if currentUser}
-		<form method="POST" action="/logout" use:enhance>
-			<button type="submit" class="btn variant-filled">Logout</button>
-		</form>
+			<form method="POST" action="/logout" use:enhance>
+				<button type="submit" class="btn variant-filled">Logout</button>
+			</form>
 		{:else}
 			<a href="/login" class="btn variant-filled">Log in</a>
 		{/if}

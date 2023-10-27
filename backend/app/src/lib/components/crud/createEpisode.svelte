@@ -57,7 +57,7 @@
 			createForm = false;
 		}}
 	>
-		<Form superform={c_superform} showRequiredIndicator={false} action="?/create">
+		<Form superform={c_superform} showRequiredIndicator={true} action="?/create">
 			<Step
 				buttonNextType={'submit'}
 				buttonNextLabel={'Create'}
@@ -86,14 +86,10 @@
 				<Input
 					info="Should this episode be public? If you choose 'no' it will be hidden from the public website. If 'yes' it will be published on the selected date."
 					required={false}
-					type="custom"
+					type="switch"
 					field="public"
-				>
-					<div class="flex items-center">
-						<p class="px-2">Should this episode be public?</p>
-						<input type="checkbox" class="checkbox" id="public" name="public" />
-					</div>
-				</Input>
+					text_action="Should this episode be public?"
+				/>
 				<Input
 					info="Choose a new date. Be accurate with hours if you can."
 					type="datetime-local"

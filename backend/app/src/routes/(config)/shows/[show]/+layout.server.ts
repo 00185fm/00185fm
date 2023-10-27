@@ -11,7 +11,7 @@ export const load = async ({ params }) => {
 			await pb.collection(Collections.Shows).getFirstListItem(`slug="${params.show}"`)
 		);
 		const showId = show.id;
-		let audioUrls: string[] = [];
+		const audioUrls: string[] = [];
 		try {
 			episodes = structuredClone(
 				await pb.collection(Collections.Episodes).getFullList({

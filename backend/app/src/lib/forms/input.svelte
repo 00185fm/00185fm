@@ -12,6 +12,7 @@
 		| 'datetime-local'
 		| 'checkbox'
 		| 'custom'
+		| 'switch'
 		| 'date';
 </script>
 
@@ -21,28 +22,32 @@
 	import FieldWrapper from './fieldParts/fieldWrapper.svelte';
 	import { fieldHasErrors } from './fieldParts/fieldError.svelte';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
+	import type { Writable } from 'svelte/store';
 
 	export let field: string;
 	export let type: InputType = 'text';
 	export let label = '';
 	export let placeholder = 'example...';
-	export let data = '';
+	export let data: string | number | boolean | Date | null = '';
 	export let accept = '';
 	export let required = true;
 	export let info: string = '';
 	export let openEditor: boolean = false;
+	export let text_action: string = '';
+	export let disabled = false;
 
 	const { superform } = getFormContext();
 	const { value, errors, constraints } = formFieldProxy(superform, field);
 
-	const proxy = dateProxy(superform.form, 'date', { format: 'datetime-local' });
+	const proxyDate = dateProxy(superform.form, 'date', { format: 'datetime-local' });
+	$: boolValue = value as Writable<boolean>;
+
 	if (data !== '') {
 		$value = data;
 		if (type === 'hidden') {
 			label = 'null';
 		}
 	}
-
 	const setType = (node: HTMLInputElement) => {
 		node.type = type;
 	};
@@ -56,7 +61,7 @@
 			<SlideToggle name="openEditor" size="sm" bind:checked={openEditor}>Edit</SlideToggle>
 		</div>
 
-		<div class="card variant-ghost-tertiary m-2 p-2">
+		<div class="card variant-ghost-tertiary m-2 p-2 whitespace-pre-wrap">
 			{@html $value}
 		</div>
 		<textarea
@@ -78,7 +83,7 @@
 			use:setType
 			name={field}
 			class="input"
-			bind:value={$proxy}
+			bind:value={$proxyDate}
 			class:input-error={hasErrors}
 			data-invalid={hasErrors}
 			{placeholder}
@@ -99,6 +104,20 @@
 			{placeholder}
 			{...$constraints}
 		/>
+	</FieldWrapper>
+{:else if type === 'switch'}
+	<FieldWrapper {field} {label} {info}>
+		<SlideToggle
+			{disabled}
+			active="bg-primary-500"
+			size="sm"
+			name={field}
+			value="true"
+			bind:checked={$boolValue}
+		>
+			<span class="capitalize">{text_action}</span>
+		</SlideToggle>
+		<!-- <input type="checkbox" value="true" class="hidden" name={field} checked={$boolValue} /> -->
 	</FieldWrapper>
 {:else if type === 'custom'}
 	<FieldWrapper {field} {label} {info}>

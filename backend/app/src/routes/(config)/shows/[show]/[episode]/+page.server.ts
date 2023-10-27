@@ -41,6 +41,7 @@ export const actions: Actions = {
 			}
 			slug = form.data.slug.split('/')[0] + '/' + slugify(form.data.title);
 			data.set('slug', slug);
+			if (!form.data.public) data.set('public', 'false');
 			await pb.collection(Collections.Episodes).update(form.data.id, data);
 			if (slug === form.data.slug) {
 				return { form };

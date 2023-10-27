@@ -58,7 +58,7 @@
 		<!-- Tab Panels --->
 		<svelte:fragment slot="panel">
 			{#if tabSet === 0}
-				<Form {superform} showRequiredIndicator={false} action="?/update">
+				<Form {superform} showRequiredIndicator={true} action="?/update">
 					<Input type="hidden" field="id" data={episode.id} />
 					<Input type="hidden" field="slug" data={episode.slug} />
 					<Input
@@ -86,16 +86,12 @@
 					<Input
 						info="Should this episode be public? If you choose 'no' it will be hidden from the public website. If 'yes' it will be published on the selected date."
 						required={false}
-						type="custom"
+						type="switch"
 						field="public"
 						data={episode.public}
-					>
-						<div class="flex items-center">
-							<p class="px-2">Should this episode be public?</p>
-							<input type="checkbox" class="checkbox" id="public" name="public" />
-						</div>
-					</Input>
-					<div class="px-4">
+						text_action="Should this episode be public?"
+					/>
+					<div class="pt-4">
 						<SlideToggle size="sm" name="date-update" bind:checked={updateDate}
 							>Update Date - <span class="text-red-500 font-bold">{dateFormat(episode.date)}</span
 							></SlideToggle
@@ -115,13 +111,14 @@
 						type="textarea"
 						field="description"
 						data={episode.description}
-						placeholder="Write here than make the 'Editor' inactive to proceed"
+						placeholder="Write here than make the 'Edit' switch inactive to proceed"
 					/>
 					<Input
 						required={false}
 						bind:openEditor={openTracklistEditor}
 						type="textarea"
 						field="tracklist"
+						data={episode.tracklist}
 						placeholder="Write here than make the 'Edit' switch inactive to proceed"
 					/>
 					<SubmitButton disabled={next_locked} field="Update Episode" />

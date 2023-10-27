@@ -6,9 +6,9 @@ export const newEpisode = z.object({
 	// audio: z.any(),
 	// image: z.any(),
 	date: z.date(),
-	public: z.boolean(),
 	tracklist: z.any().optional(),
 	credits: z.any().optional(),
+	public: z.boolean(),
 	description: z.any().optional(),
 	show: z.string(),
 	show_slug: z.string()

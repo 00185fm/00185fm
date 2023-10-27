@@ -68,7 +68,7 @@
 				<h2 class="h2">New Show</h2>
 				<button class="btn-icon variant-filled" on:click={() => (createForm = false)}>✕</button>
 			</div>
-			<Form {superform} showRequiredIndicator={false} action="?/create">
+			<Form {superform} showRequiredIndicator={true} action="?/create">
 				<Input type="text" field="title" />
 				<Input type="text" field="author" />
 				<Input type="textarea" field="description" />
