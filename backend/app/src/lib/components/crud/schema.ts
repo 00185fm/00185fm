@@ -37,3 +37,17 @@ export const updateShow = z.object({
 	author: z.string(),
 	description: z.any().optional()
 });
+export const updateProject = z.object({
+	id: z.string(),
+	about: z.string().optional(),
+	bandcamp: z.string().optional(),
+	email: z.string().optional(),
+	facebook: z.string().optional(),
+	impressum: z.string().optional(),
+	instagram: z.string().optional(),
+	name: z.string().optional(),
+	support: z.string().optional(),
+	telegram: z.string().optional(),
+	website: z.string().optional(),
+	youtube: z.string().optional()
+});

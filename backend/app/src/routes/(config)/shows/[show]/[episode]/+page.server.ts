@@ -85,13 +85,12 @@ export const actions: Actions = {
 		} catch (error) {
 			console.log(error);
 		}
-		if (playlists.length > 0) {
-			try {
-				const write = { playlists: playlists };
-				await pb.collection('episodes').update(episodeId, write);
-			} catch (error) {
-				console.log(error);
-			}
+
+		try {
+			const write = { playlists: playlists };
+			await pb.collection('episodes').update(episodeId, write);
+		} catch (error) {
+			console.log(error);
 		}
 	},
 	tags: async ({ request }) => {

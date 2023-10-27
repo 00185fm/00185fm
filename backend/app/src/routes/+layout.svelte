@@ -9,6 +9,11 @@
 	$: currentUser = data.user;
 	$: currentPage = $page.url.pathname;
 	initializeStores();
+	import { afterNavigate } from '$app/navigation';
+
+	afterNavigate(() => {
+		document.getElementById('page')?.scrollTo(0, 0);
+	});
 </script>
 
 <svelte:head>
