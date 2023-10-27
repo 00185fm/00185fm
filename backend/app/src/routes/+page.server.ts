@@ -46,5 +46,24 @@ export const actions: Actions = {
 		} catch (error) {
 			console.log(error);
 		}
+	},
+	stoplive: async () => {
+		try {
+			const url = PRIVATE_LIQUIDSOAP + '/stoplive';
+			const result = await fetch(url, {
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					'User-Agent': 'Frontend 00185fm'
+				}
+			});
+			if (result.ok) {
+				return {
+					success: true
+				};
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	}
 };
