@@ -1,13 +1,14 @@
 import { pb } from '$lib/pocketbase';
-import { Collections, type EpisodesRecord } from '$lib/pocketbase/types';
+import { Collections } from '$lib/pocketbase/types';
 import { redirect, type Actions } from '@sveltejs/kit';
+import type { RecordModel } from 'pocketbase';
 
 export const load = async ({ params, locals }) => {
 	if (!locals?.user) throw redirect(302, '/login');
 	const playlist = structuredClone(
 		await pb.collection(Collections.Playlists).getFirstListItem('title="' + params.playlist + '"')
 	);
-	const episodes: EpisodesRecord[] = structuredClone(
+	const episodes: RecordModel[] = structuredClone(
 		await pb
 			.collection(Collections.Episodes)
 			.getFullList({ filter: "playlists ~'" + playlist.id + "'" })

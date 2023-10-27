@@ -2,12 +2,16 @@
 * This file was @generated using pocketbase-typegen
 */
 
+import type PocketBase from 'pocketbase'
+import { type RecordService } from 'pocketbase'
+
 export enum Collections {
 	Episodes = "episodes",
 	EpisodesShow = "episodes_show",
 	EpisodesTag = "episodes_tag",
 	Nowplaying = "nowplaying",
 	Playlists = "playlists",
+	Projects = "projects",
 	Schedules = "schedules",
 	Shows = "shows",
 	Tags = "tags",
@@ -39,51 +43,69 @@ export type AuthSystemFields<T = never> = {
 // Record types for each collection
 
 export type EpisodesRecord = {
-	title?: string
+	audio?: string
 	author?: string
+	credits?: string
 	date?: IsoDateString
 	description?: HTMLString
-	slug?: string
-	audio?: string
 	image?: string
-	show?: RecordIdString
-	tags?: RecordIdString[]
 	playlists?: RecordIdString[]
+	public?: boolean
+	show?: RecordIdString
+	slug?: string
+	tags?: RecordIdString[]
+	title?: string
+	tracklist?: HTMLString
 }
 
 export type EpisodesShowRecord = {
-	show?: RecordIdString
 	count?: number
+	show?: RecordIdString
 }
 
 export type EpisodesTagRecord = {
-	tags?: RecordIdString[]
 	episodes?: number
+	tags?: RecordIdString[]
 }
 
 export type NowplayingRecord = {
-	title?: string
 	artist?: string
+	episode?: RecordIdString
 	is_live?: boolean
 	slug?: string
+	title?: string
 }
 
 export type PlaylistsRecord = {
 	title?: string
 }
 
+export type ProjectsRecord = {
+	about?: HTMLString
+	bandcamp?: string
+	email?: string
+	facebook?: string
+	impressum?: HTMLString
+	instagram?: string
+	name: string
+	support?: string
+	telegram?: string
+	website?: string
+	youtube?: string
+}
+
 export type SchedulesRecord = {
-	info?: string
-	title?: string
 	author?: string
 	date?: IsoDateString
+	info?: string
+	title?: string
 }
 
 export type ShowsRecord = {
-	title?: string
 	author?: string
 	description?: HTMLString
 	slug?: string
+	title?: string
 }
 
 export type TagsRecord = {
@@ -98,6 +120,7 @@ export type EpisodesShowResponse<Texpand = unknown> = Required<EpisodesShowRecor
 export type EpisodesTagResponse<Texpand = unknown> = Required<EpisodesTagRecord> & BaseSystemFields<Texpand>
 export type NowplayingResponse<Texpand = unknown> = Required<NowplayingRecord> & BaseSystemFields<Texpand>
 export type PlaylistsResponse<Texpand = unknown> = Required<PlaylistsRecord> & BaseSystemFields<Texpand>
+export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
 export type SchedulesResponse<Texpand = unknown> = Required<SchedulesRecord> & BaseSystemFields<Texpand>
 export type ShowsResponse<Texpand = unknown> = Required<ShowsRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
@@ -111,6 +134,7 @@ export type CollectionRecords = {
 	episodes_tag: EpisodesTagRecord
 	nowplaying: NowplayingRecord
 	playlists: PlaylistsRecord
+	projects: ProjectsRecord
 	schedules: SchedulesRecord
 	shows: ShowsRecord
 	tags: TagsRecord
@@ -123,8 +147,25 @@ export type CollectionResponses = {
 	episodes_tag: EpisodesTagResponse
 	nowplaying: NowplayingResponse
 	playlists: PlaylistsResponse
+	projects: ProjectsResponse
 	schedules: SchedulesResponse
 	shows: ShowsResponse
 	tags: TagsResponse
 	users: UsersResponse
+}
+
+// Type for usage with type asserted PocketBase instance
+// https://github.com/pocketbase/js-sdk#specify-typescript-definitions
+
+export type TypedPocketBase = PocketBase & {
+	collection(idOrName: 'episodes'): RecordService<EpisodesResponse>
+	collection(idOrName: 'episodes_show'): RecordService<EpisodesShowResponse>
+	collection(idOrName: 'episodes_tag'): RecordService<EpisodesTagResponse>
+	collection(idOrName: 'nowplaying'): RecordService<NowplayingResponse>
+	collection(idOrName: 'playlists'): RecordService<PlaylistsResponse>
+	collection(idOrName: 'projects'): RecordService<ProjectsResponse>
+	collection(idOrName: 'schedules'): RecordService<SchedulesResponse>
+	collection(idOrName: 'shows'): RecordService<ShowsResponse>
+	collection(idOrName: 'tags'): RecordService<TagsResponse>
+	collection(idOrName: 'users'): RecordService<UsersResponse>
 }
