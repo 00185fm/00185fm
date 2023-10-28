@@ -24,12 +24,23 @@ export const checkEmpty = (i: any): string[] => {
 	return empty;
 };
 
-export const dateFormat = (dateString: string) => {
+export const dateFormat = (dateString: string, showDay: boolean = false) => {
 	const date = new Date(dateString);
-	const mese = date.toLocaleString('default', { month: 'short' });
-	const anno = date.getFullYear();
+	const day = date.getDate();
+	const month = date.toLocaleString('default', { month: 'short' });
+	const year = date.getFullYear();
 
-	const result = `${mese.toLocaleLowerCase()} ${anno}`;
+	if (showDay) return `${day} ${month.toLocaleLowerCase()} ${year}`;
+	const result = `${month.toLocaleLowerCase()} ${year}`;
+	return result;
+};
+export const hourFormat = (dateString: string) => {
+	const date = new Date(dateString);
+	const hour = date.getHours();
+	// minutes should be two digits
+	const minutes = ('0' + date.getMinutes()).slice(-2);
+
+	const result = `${hour}:${minutes}`;
 	return result;
 };
 

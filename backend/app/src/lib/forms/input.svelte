@@ -8,6 +8,7 @@
 		| 'tel'
 		| 'url'
 		| 'file'
+		| 'time'
 		| 'textarea'
 		| 'datetime-local'
 		| 'checkbox'
@@ -35,11 +36,14 @@
 	export let openEditor: boolean = false;
 	export let text_action: string = '';
 	export let disabled = false;
+	export let day: Date = new Date(Date.now());
 
 	const { superform } = getFormContext();
 	const { value, errors, constraints } = formFieldProxy(superform, field);
 
-	const proxyDate = dateProxy(superform.form, 'date', { format: 'datetime-local' });
+	const proxyDateTime = dateProxy(superform.form, 'date', { format: 'datetime-local' });
+	const proxyDate = dateProxy(superform.form, 'date', { format: 'date' });
+
 	$: boolValue = value as Writable<boolean>;
 
 	if (data !== '') {
@@ -83,7 +87,37 @@
 			use:setType
 			name={field}
 			class="input"
+			bind:value={$proxyDateTime}
+			class:input-error={hasErrors}
+			data-invalid={hasErrors}
+			{placeholder}
+			{...$constraints}
+		/>
+	</FieldWrapper>
+{:else if type === 'date'}
+	<FieldWrapper {field} {label} {info}>
+		<input
+			{required}
+			use:setType
+			name={field}
+			class="input"
 			bind:value={$proxyDate}
+			class:input-error={hasErrors}
+			data-invalid={hasErrors}
+			{placeholder}
+			{...$constraints}
+		/>
+	</FieldWrapper>
+{:else if type === 'time'}
+	<FieldWrapper {field} {label} {info}>
+		<input
+			{required}
+			type="datetime-local"
+			name={field}
+			class="input"
+			bind:value={$proxyDateTime}
+			min={day.toISOString().slice(0, 10) + 'T00:00'}
+			max={day.toISOString().slice(0, 10) + 'T23:59'}
 			class:input-error={hasErrors}
 			data-invalid={hasErrors}
 			{placeholder}

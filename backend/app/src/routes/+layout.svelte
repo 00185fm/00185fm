@@ -1,6 +1,10 @@
 <script lang="ts">
 	import '../app.postcss';
 	import { Toast, AppShell, initializeStores, Modal } from '@skeletonlabs/skeleton';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+
+	import { storePopup } from '@skeletonlabs/skeleton';
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	import Heading from '$lib/components/layout/heading.svelte';
 	import Sidebar from '$lib/components/layout/sidebar.svelte';

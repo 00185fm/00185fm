@@ -12,6 +12,7 @@ export enum Collections {
 	Nowplaying = "nowplaying",
 	Playlists = "playlists",
 	Projects = "projects",
+	ScheduledItems = "scheduled_items",
 	Schedules = "schedules",
 	Shows = "shows",
 	Tags = "tags",
@@ -94,11 +95,18 @@ export type ProjectsRecord = {
 	youtube?: string
 }
 
+export type ScheduledItemsRecord = {
+	artist?: string
+	date?: IsoDateString
+	episode?: RecordIdString
+	schedule?: RecordIdString
+	title?: string
+}
+
 export type SchedulesRecord = {
-	author?: string
 	date?: IsoDateString
 	info?: string
-	title?: string
+	manual?: boolean
 }
 
 export type ShowsRecord = {
@@ -121,6 +129,7 @@ export type EpisodesTagResponse<Texpand = unknown> = Required<EpisodesTagRecord>
 export type NowplayingResponse<Texpand = unknown> = Required<NowplayingRecord> & BaseSystemFields<Texpand>
 export type PlaylistsResponse<Texpand = unknown> = Required<PlaylistsRecord> & BaseSystemFields<Texpand>
 export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
+export type ScheduledItemsResponse<Texpand = unknown> = Required<ScheduledItemsRecord> & BaseSystemFields<Texpand>
 export type SchedulesResponse<Texpand = unknown> = Required<SchedulesRecord> & BaseSystemFields<Texpand>
 export type ShowsResponse<Texpand = unknown> = Required<ShowsRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
@@ -135,6 +144,7 @@ export type CollectionRecords = {
 	nowplaying: NowplayingRecord
 	playlists: PlaylistsRecord
 	projects: ProjectsRecord
+	scheduled_items: ScheduledItemsRecord
 	schedules: SchedulesRecord
 	shows: ShowsRecord
 	tags: TagsRecord
@@ -148,6 +158,7 @@ export type CollectionResponses = {
 	nowplaying: NowplayingResponse
 	playlists: PlaylistsResponse
 	projects: ProjectsResponse
+	scheduled_items: ScheduledItemsResponse
 	schedules: SchedulesResponse
 	shows: ShowsResponse
 	tags: TagsResponse
@@ -164,6 +175,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'nowplaying'): RecordService<NowplayingResponse>
 	collection(idOrName: 'playlists'): RecordService<PlaylistsResponse>
 	collection(idOrName: 'projects'): RecordService<ProjectsResponse>
+	collection(idOrName: 'scheduled_items'): RecordService<ScheduledItemsResponse>
 	collection(idOrName: 'schedules'): RecordService<SchedulesResponse>
 	collection(idOrName: 'shows'): RecordService<ShowsResponse>
 	collection(idOrName: 'tags'): RecordService<TagsResponse>

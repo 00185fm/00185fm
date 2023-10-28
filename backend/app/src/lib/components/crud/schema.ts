@@ -51,3 +51,31 @@ export const updateProject = z.object({
 	website: z.string().optional(),
 	youtube: z.string().optional()
 });
+
+export const createSchedule = z.object({
+	date: z.date(),
+	info: z.string().optional(),
+	manual: z.boolean().default(false).optional()
+});
+export const updateSchedule = z.object({
+	id: z.string(),
+	date: z.date().optional(),
+	info: z.string().optional(),
+	manual: z.boolean().default(false).optional()
+});
+
+export const createScheduledItem = z.object({
+	artist: z.string(),
+	date: z.date(),
+	title: z.string(),
+	schedule: z.string(),
+	episode: z.string().optional()
+});
+export const updateScheduledItem = z.object({
+	id: z.string(),
+	artist: z.string().optional(),
+	date: z.date().optional(),
+	title: z.string().optional(),
+	schedule: z.string(),
+	episode: z.string().optional()
+});

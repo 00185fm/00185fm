@@ -3,7 +3,7 @@ import { Collections } from '$lib/pocketbase/types';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import { newEpisode, updateShow } from '$lib/components/crud/schema';
 import { superValidate } from 'sveltekit-superforms/server';
-import { slugify, serializeNonPOJOs } from '$lib/server/utility';
+import { slugify } from '$lib/server/utility';
 import type { PageServerLoad } from './$types';
 import { PUBLIC_DEF_PLAYLIST_ID } from '$env/static/public';
 
@@ -23,7 +23,6 @@ export const actions: Actions = {
 	create: async ({ request }) => {
 		const data = await request.formData();
 		const form = await superValidate(data, newEpisode);
-		console.log(form.data);
 		let res;
 		if (!form.valid) {
 			return fail(400, { form });
@@ -39,7 +38,7 @@ export const actions: Actions = {
 		} catch (error) {
 			console.log(error);
 		}
-		return { created: serializeNonPOJOs(res || null), form };
+		return { created: structuredClone(res || null), form };
 	},
 	update: async ({ request }) => {
 		const data = await request.formData();
