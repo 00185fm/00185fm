@@ -7,7 +7,7 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.19.0
+        - PB_VERSION=0.19.1
     container_name: pocketbase
     command: ["./pocketbase", "serve", "--http=0.0.0.0:${PB_PORT}"]
     restart: always

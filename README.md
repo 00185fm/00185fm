@@ -10,7 +10,7 @@
 
 ### Admin
 
-- Pocketbase v0.18.6
+- Pocketbase v0.19.1
 
   #### Admin UI
 
