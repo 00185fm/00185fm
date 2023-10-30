@@ -29,12 +29,14 @@
 
 	export let className = 'space-y-6';
 
+	export let autocomplete: boolean = true;
 	const { errors, delayed, enhance, message, reset } = superform;
 
 	setContext<FormContext<T>>(FORM_KEY, { superform, showRequiredIndicator });
 </script>
 
 <form
+	autocomplete={autocomplete ? 'on' : 'off'}
 	class={className}
 	{action}
 	method="post"

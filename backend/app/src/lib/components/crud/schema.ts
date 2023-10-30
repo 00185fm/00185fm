@@ -61,7 +61,7 @@ export const updateSchedule = z.object({
 	id: z.string(),
 	date: z.date().optional(),
 	info: z.string().optional(),
-	manual: z.boolean().default(false).optional()
+	manual: z.boolean().optional()
 });
 
 export const createScheduledItem = z.object({

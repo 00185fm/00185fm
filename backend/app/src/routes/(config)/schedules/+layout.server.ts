@@ -1,8 +1,6 @@
-import { createSchedule } from '$lib/components/crud/schema';
 import { pb } from '$lib/pocketbase';
 import { Collections } from '$lib/pocketbase/types';
 import { redirect } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
 import type { LayoutServerLoad } from './$types';
 import type { RecordModel } from 'pocketbase';
 

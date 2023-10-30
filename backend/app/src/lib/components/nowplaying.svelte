@@ -12,7 +12,7 @@
 
 	const tSkip: ToastSettings = {
 		message: 'Track successfully skipped! 🎉',
-		background: 'variant-ghost-primary',
+		background: 'variant-glass-primary',
 		timeout: 2000,
 		hoverable: true
 	};

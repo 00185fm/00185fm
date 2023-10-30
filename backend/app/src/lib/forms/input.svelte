@@ -25,6 +25,7 @@
 	import { SlideToggle } from '@skeletonlabs/skeleton';
 	import type { Writable } from 'svelte/store';
 
+	export let hidden: boolean = false;
 	export let field: string;
 	export let type: InputType = 'text';
 	export let label = '';
@@ -47,10 +48,16 @@
 	$: boolValue = value as Writable<boolean>;
 
 	if (data !== '') {
-		$value = data;
-		if (type === 'hidden') {
-			label = 'null';
+		if (type === 'hidden') label = 'null';
+		if (hidden) label = 'null';
+		if (type === 'time' || type === 'datetime-local') {
+			$proxyDateTime = data as string;
 		}
+		if (type === 'date') {
+			$proxyDate = data as string;
+			console.log($proxyDate);
+		}
+		$value = data;
 	}
 	const setType = (node: HTMLInputElement) => {
 		node.type = type;
@@ -69,6 +76,7 @@
 			{@html $value}
 		</div>
 		<textarea
+			{disabled}
 			name={field}
 			class:hidden={!openEditor}
 			class="textarea"
@@ -83,9 +91,11 @@
 {:else if type === 'datetime-local'}
 	<FieldWrapper {field} {label} {info}>
 		<input
+			{disabled}
 			{required}
 			use:setType
 			name={field}
+			class:hidden
 			class="input"
 			bind:value={$proxyDateTime}
 			class:input-error={hasErrors}
@@ -97,9 +107,11 @@
 {:else if type === 'date'}
 	<FieldWrapper {field} {label} {info}>
 		<input
+			{disabled}
 			{required}
-			use:setType
+			type="date"
 			name={field}
+			class:hidden
 			class="input"
 			bind:value={$proxyDate}
 			class:input-error={hasErrors}
@@ -111,7 +123,9 @@
 {:else if type === 'time'}
 	<FieldWrapper {field} {label} {info}>
 		<input
+			{disabled}
 			{required}
+			class:hidden
 			type="datetime-local"
 			name={field}
 			class="input"
@@ -131,6 +145,7 @@
 			use:setType
 			name={field}
 			class="input"
+			class:hidden
 			{accept}
 			bind:value={$value}
 			class:input-error={hasErrors}
@@ -151,7 +166,6 @@
 		>
 			<span class="capitalize">{text_action}</span>
 		</SlideToggle>
-		<!-- <input type="checkbox" value="true" class="hidden" name={field} checked={$boolValue} /> -->
 	</FieldWrapper>
 {:else if type === 'custom'}
 	<FieldWrapper {field} {label} {info}>
@@ -160,6 +174,8 @@
 {:else}
 	<FieldWrapper {field} {label} {info}>
 		<input
+			class:hidden
+			{disabled}
 			{required}
 			use:setType
 			name={field}

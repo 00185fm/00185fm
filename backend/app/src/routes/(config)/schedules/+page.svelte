@@ -76,12 +76,17 @@
 			{#each schedules as schedule}
 				<a href={'/schedules/' + slugify(dateFormat(schedule.date, true))} class="card card-hover">
 					<header class="card-header">
-						<p class="text-xl font-bold">
-							{dateFormat(schedule.date, true)}
+						<p>
+							<span class="text-xl font-bold align-middle">
+								{dateFormat(schedule.date, true)}
+							</span>
+							<small class="text-gray-500 align-middle"
+								>{schedule.info ? schedule.info : 'No info'}</small
+							>
 						</p>
 					</header>
-					<section class="p-4">
-						<p>{schedule.info}</p>
+					<section class="p-3">
+						<p class="text-primary-500">{schedule.manual ? '♟ Manual' : '✨ Automated'}</p>
 					</section>
 				</a>
 			{/each}
