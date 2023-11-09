@@ -2,7 +2,7 @@ FROM alpine:latest
 
 WORKDIR /pb
 
-ARG PB_VERSION=0.19.1
+ARG PB_VERSION=0.19.3
 ARG PB_PORT=4090
 
 RUN apk add --no-cache \
