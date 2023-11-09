@@ -18,7 +18,7 @@
 </script>
 
 <div class="card m-auto mt-16 max-w-md p-8">
-	<h2 class="h2 font-bold text-2xl">Log in</h2>
+	<h2 class="h2 font-bold pb-4">Log in</h2>
 
 	<Form {superform} showRequiredIndicator={false}>
 		<Input type="email" field="email" />

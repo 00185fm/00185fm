@@ -62,7 +62,7 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.19.1
+        - PB_VERSION=0.19.3
     command: [
         "./pocketbase",
         "serve",
@@ -185,9 +185,9 @@ services:
       - ./liquidsoap/settings.liq:/settings.liq:ro
 
   ################ FRONTEND
-  app:
+  admin:
     build:
-      context: ./app
+      context: ./admin
       args:
         - PUBLIC_NP_ID
         - PUBLIC_DEF_PLAYLIST_ID
@@ -200,7 +200,7 @@ services:
         - LIVE_PASSWORD
         - LIVE_MOUNTPOINT
         - PUBLIC_LIQ_URL
-    container_name: app
+    container_name: admin
     restart: always
     environment:
       - ORIGIN
@@ -223,10 +223,10 @@ services:
       - "4000:4000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`dev.00185fm.eu`)"
-      - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
-      - "traefik.http.services.app.loadbalancer.server.port=4000"
+      - "traefik.http.routers.admin.rule=Host(`admin.00185fm.eu`)"
+      - "traefik.http.routers.admin.entrypoints=websecure"
+      - "traefik.http.routers.admin.tls.certresolver=letsencrypt"
+      - "traefik.http.services.admin.loadbalancer.server.port=4000"
       - "traefik.docker.network=traefik-net"
     depends_on:
       - pocketbase
