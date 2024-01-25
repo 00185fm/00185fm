@@ -3,11 +3,13 @@ version: "3.8"
 services:
   ################ POCKETBASE
   pocketbase:
+    env_file:
+      - .env.local
     build:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.19.3
+        - PB_VERSION=0.21.1
     container_name: pocketbase
     command: ["./pocketbase", "serve", "--http=0.0.0.0:${PB_PORT}"]
     restart: always
@@ -28,6 +30,8 @@ services:
       retries: 5
   ################ ICECAST
   icecast:
+    env_file:
+      - .env.local
     image: moul/icecast
     container_name: icecast
     restart: always
@@ -45,6 +49,8 @@ services:
 
   ################ LIQUIDSOAP
   liquidsoap:
+    env_file:
+      - .env.local
     image: "savonet/liquidsoap-alpine:v2.1.4"
     container_name: liquidsoap
     restart: always
