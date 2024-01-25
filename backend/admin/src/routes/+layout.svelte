@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<title>00185fm - Configuration</title>
+	<title>00185fm - Admin</title>
 </svelte:head>
 <Modal />
 <Toast position="t" />
