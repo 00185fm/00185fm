@@ -3,11 +3,16 @@ version: "3.8"
 services:
   ################ TRAEFIK
   traefik:
-    image: traefik:v2.10.4
     container_name: traefik
     restart: unless-stopped
+    image: traefik:v2.10.7
     security_opt:
       - no-new-privileges:true
+    env_file:
+      - .env
+    environment:
+      - CF_API_EMAIL
+      - CF_DNS_API_TOKEN
     command:
       # We are going to use the docker provider
       - "--providers.docker"
@@ -20,7 +25,7 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       # Enable ACME (Let's Encrypt): automatic SSL.
-      - "--certificatesresolvers.letsencrypt.acme.email=CF_API_EMAIL"
+      - "--certificatesresolvers.letsencrypt.acme.email=${CF_API_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
       - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
@@ -35,9 +40,6 @@ services:
     networks:
       traefik-net:
         ipv4_address: 10.5.0.5
-    environment:
-      - CF_API_EMAIL
-      - CF_DNS_API_TOKEN
     ports:
       - 80:80
       - 443:443
@@ -58,6 +60,8 @@ services:
 
   ################ POCKETBASE
   pocketbase:
+    env_file:
+      - .env
     build:
       context: ./pocketbase
       args:
@@ -118,6 +122,8 @@ services:
 
   ################ ICECAST
   icecast:
+    env_file:
+      - .env
     image: moul/icecast
     container_name: icecast
     restart: always
@@ -147,6 +153,8 @@ services:
 
   ################ LIQUIDSOAP
   liquidsoap:
+    env_file:
+      - .env
     image: "savonet/liquidsoap-alpine:v2.1.4"
     container_name: liquidsoap
     restart: always
@@ -188,6 +196,8 @@ services:
 
   ################ FRONTEND
   admin:
+    env_file:
+      - .env
     build:
       context: ./admin
       args:
