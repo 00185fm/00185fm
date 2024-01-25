@@ -1,21 +1,25 @@
 MAKEFLAGS += -j2
 
-bg:
+be_docker:
 	@echo "🚀 Launching the Backend" 
 	cd backend && docker compose up -d
-fg_pub:
-	@echo "🚀 Launching the Frontend Public" 
-	cd frontend_public && pnpm i && pnpm dev
+fe:
+	@echo "🚀 Launching the Frontend" 
+	cd frontend && npm install && npm run dev
 
-fg_priv:
-	@echo "🚀 Launching the Frontend Private" 
+admin:
+	@echo "🚀 Launching the Admin" 
 	cd backend/admin && npm install && npm run dev
 
-up_priv: bg fg_priv
+up_admin: 
+	be_docker admin
 
-up_pub: bg fg_pub
+up_fe:
+	be_docker fe
 
-up: bg fg_priv fg_pub ## 💄 Run all the components quickly
+up: 
+	@echo "🚀 Launching 00185fm - Local"
+	be_docker admin fe
 
 down:
 	@echo "🛑 Stopping the Backend" 
