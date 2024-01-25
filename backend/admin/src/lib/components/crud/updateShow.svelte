@@ -57,6 +57,7 @@
 						info="This should be the curator name. Feel free to use a generic name (like 'GUESTS'), you will be able to choose a specific 'Author' for each episode."
 						type="text"
 						field="author"
+						label="Artist"
 						data={show.author}
 					/>
 					<Input

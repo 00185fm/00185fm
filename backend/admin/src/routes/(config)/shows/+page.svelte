@@ -101,6 +101,7 @@
 							info="This should be the curator name. Feel free to use a generic name (like 'GUESTS'), you will be able to choose a specific 'Artist' for each episode."
 							type="text"
 							field="author"
+							label="Artist"
 						/>
 						<Input
 							info="<p>Use any <a href='https://00185fm.github.io/tw-editor/' target='_blank' style='text-shadow: rgb(255, 253, 0) 9px 3px 5px;' class='text-secondary-700 font-bold text-xl'>rich text to html editor</a> to customize the description styling (<a href='https://wordtohtml.net/' target='_blank' class='btn-icon btn-icon-sm variant-filled-primary'>👁</a>). Then activate the 'Editor' and copy&paste the result in the box.</p> <p class='text-sm text-red-500'>Images are not allowed yet.</p>"
