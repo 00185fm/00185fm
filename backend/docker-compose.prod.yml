@@ -62,7 +62,7 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.19.3
+        - PB_VERSION=0.21.1
     command: [
         "./pocketbase",
         "serve",
@@ -83,10 +83,12 @@ services:
       - LIQ_TOKEN
       - PB_FILES_URL
       - ALLOWED_ORIGINS
+      - DEF_PLAYLIST_ID
     volumes:
       - ./pocketbase/pb_data:/pb/pb_data
       - ./pocketbase/pb_hooks:/pb/pb_hooks
       - ./pocketbase/pb_public:/pb/pb_public
+      - ./pocketbase/pb_migrations:/pb/pb_migrations
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pocketbase.rule=Host(`pb.00185fm.eu`)"
