@@ -13,11 +13,7 @@ export const load = async ({ params, locals, parent }) => {
 	const schedule: RecordModel | undefined = schedules?.find(
 		(i: RecordModel) => slugify(dateFormat(i.date, true)) === params.schedule
 	);
-	const query = `date >="${new Date(Date.now()).toISOString()}"`;
-	const episodes: RecordModel[] | undefined = await pb.collection('episodes').getFullList({
-		filter: query,
-		sort: 'date'
-	});
+	const episodes: RecordModel[] = (await parent()).episodes;
 	const scheduledItems: RecordModel[] =
 		(await pb.collection(Collections.ScheduledItems).getFullList({
 			sort: 'date',
@@ -86,5 +82,20 @@ export const actions: Actions = {
 			return fail(400, data);
 		}
 		throw redirect(302, '/schedules');
+	},
+	deleteScheduledItem: async ({ url }) => {
+		let id = '';
+		const pathname = url.pathname;
+		try {
+			const data = url.searchParams;
+			id = data.get('id') || '';
+			await pb.collection(Collections.ScheduledItems).delete(id);
+		} catch (error) {
+			const data = {
+				errors: error
+			};
+			return fail(400, data);
+		}
+		throw redirect(302, pathname);
 	}
 };

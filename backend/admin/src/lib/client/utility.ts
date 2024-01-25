@@ -1,6 +1,16 @@
 import type { RecordModel } from 'pocketbase';
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 
+export function removeLastSegment(inputString: string): string {
+	const lastSlashIndex = inputString.lastIndexOf('/');
+
+	if (lastSlashIndex !== -1) {
+		return inputString.substring(0, lastSlashIndex);
+	} else {
+		// Handle the case where there is no "/" in the string
+		return inputString;
+	}
+}
 export const file_url = (id: string, filename: string, thumb: string) => {
 	let url = '';
 	if (filename !== '') {
@@ -34,6 +44,7 @@ export const dateFormat = (dateString: string, showDay: boolean = false) => {
 	const result = `${month.toLocaleLowerCase()} ${year}`;
 	return result;
 };
+
 export const hourFormat = (dateString: string) => {
 	const date = new Date(dateString);
 	const hour = date.getHours();

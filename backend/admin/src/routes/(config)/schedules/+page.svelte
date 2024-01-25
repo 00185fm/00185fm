@@ -49,10 +49,11 @@
 					placeholder="Live from Asile - Turin"
 				/>
 				<Input
-					info="Should this livestream be manually handled or automated? If this parameter is off (default) the episodes will be automatically published and broadcasted at the specified date."
+					info="Should this livestream be manually handled or automated? If this parameter is off (default) the episodes will be broadcasted at the specified date."
 					required={false}
 					type="custom"
 					field="manual"
+					label="Mode"
 				>
 					<div class="px-2">
 						<SlideToggle
@@ -62,7 +63,7 @@
 							value="true"
 							bind:checked={$boolValue}
 						>
-							<span class="capitalize">{$boolValue ? 'Manual' : 'Automated'}</span>
+							<span class="capitalize">{$boolValue ? '♟ Manual' : '🤖 Automated'}</span>
 						</SlideToggle>
 					</div>
 				</Input>
@@ -80,13 +81,15 @@
 							<span class="text-xl font-bold align-middle">
 								{dateFormat(schedule.date, true)}
 							</span>
+						</p>
+						<p>
 							<small class="text-gray-500 align-middle"
 								>{schedule.info ? schedule.info : 'No info'}</small
 							>
 						</p>
 					</header>
 					<section class="p-3">
-						<p class="text-primary-500">{schedule.manual ? '♟ Manual' : '✨ Automated'}</p>
+						<p class="text-primary-500">{schedule.manual ? '♟ Manual' : '🤖 Automated'}</p>
 					</section>
 				</a>
 			{/each}

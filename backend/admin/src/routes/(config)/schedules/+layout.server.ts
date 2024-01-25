@@ -7,12 +7,20 @@ import type { RecordModel } from 'pocketbase';
 export const load: LayoutServerLoad = async ({ locals }) => {
 	if (!locals?.user) throw redirect(302, '/login');
 	let schedules: RecordModel[] = [];
+	let episodes: RecordModel[] | undefined = [];
 	try {
 		schedules = structuredClone(
 			await pb.collection(Collections.Schedules).getFullList({ sort: 'date' })
 		);
+
+		const query = `public=False`;
+
+		episodes = await pb.collection(Collections.Episodes).getFullList({
+			filter: query,
+			sort: 'date'
+		});
 	} catch (error) {
 		console.log(error);
 	}
-	return { schedules };
+	return { schedules, episodes };
 };

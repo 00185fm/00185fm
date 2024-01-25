@@ -7,9 +7,12 @@
 	} from '@skeletonlabs/skeleton';
 	import type { RecordModel } from 'pocketbase';
 	export let allEpisodes: RecordModel[] = [];
-	export let episode_id: string = '';
+	export let scheduled: RecordModel | undefined = undefined;
+	let foundEpisode: RecordModel | undefined;
+	$: foundEpisode;
 	let episodesOptions: AutocompleteOption[] = [];
 	import Input from '$lib/forms/input.svelte';
+	import { onMount } from 'svelte';
 	if (allEpisodes.length > 0) {
 		allEpisodes.forEach((episode) => {
 			episodesOptions.push({
@@ -19,20 +22,24 @@
 		});
 	}
 	export let manual: boolean = false;
+
 	let popupSettings: PopupSettings = {
 		event: 'focus-blur',
 		target: 'popupAutocomplete',
 		placement: 'bottom'
 	};
-	let inputPopup: string = '';
-	let res: string = '';
-
+	$: inputPopup = '';
+	$: res = '';
 	$: if (inputPopup === '') {
 		res = '';
 	}
+	$: artist = foundEpisode?.author;
+	$: title = foundEpisode?.title;
+
 	function onPopupDemoSelect(event: CustomEvent<AutocompleteOption>): void {
 		inputPopup = event.detail.label as string;
 		res = event.detail.value as string;
+		foundEpisode = findEpisode(res);
 	}
 
 	const findEpisode = (id: string) => {
@@ -42,13 +49,18 @@
 			}
 		});
 	};
-	// $: if (episode_id !== '') res = episode_id;
-	$: console.log(episode_id);
-	$: foundEpisode = findEpisode(res);
-	$: console.log(foundEpisode);
+
+	onMount(() => {
+		if (!scheduled) return;
+		if (scheduled?.episode !== '') {
+			res = scheduled?.episode;
+			foundEpisode = findEpisode(scheduled?.episode);
+			inputPopup = foundEpisode?.author + ' - ' + foundEpisode?.title;
+		}
+	});
 </script>
 
-<div class="card mb-2 p-2 variant-ringed space-y-2">
+<div class="space-y-2">
 	<input
 		required={!manual}
 		class="input autocomplete"
@@ -58,18 +70,6 @@
 		placeholder="Select episode if already created..."
 		use:popup={popupSettings}
 	/>
-	{#if !manual && foundEpisode}
-		<input class="hidden" type="text" name="artist" value={foundEpisode.author} />
-		<input class="hidden" type="text" name="title" value={foundEpisode.title} />
-		<Input
-			hidden={true}
-			type="datetime-local"
-			field="date"
-			label="When"
-			day={new Date(foundEpisode?.date)}
-			data={foundEpisode?.date}
-		/>
-	{/if}
 
 	<div class="w-full">
 		<input class="hidden" type="text" name="episode" bind:value={res} />
@@ -83,4 +83,12 @@
 			/>
 		</div>
 	</div>
+
+	{#if foundEpisode}
+		<Input type="text" field="artist" bind:data={artist} />
+		<Input type="text" field="title" bind:data={title} />
+	{:else}
+		<Input type="text" field="artist" data={scheduled?.artist} />
+		<Input type="text" field="title" data={scheduled?.title} />
+	{/if}
 </div>

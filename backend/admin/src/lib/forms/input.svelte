@@ -42,22 +42,22 @@
 	const { superform } = getFormContext();
 	const { value, errors, constraints } = formFieldProxy(superform, field);
 
-	const proxyDateTime = dateProxy(superform.form, 'date', { format: 'datetime-local' });
-	const proxyDate = dateProxy(superform.form, 'date', { format: 'date' });
+	// @ts-ignore
+	const proxyDate = dateProxy(superform.form, 'date', {
+		format: `${type === 'datetime-local' ? 'datetime-local' : 'date'}`
+	});
 
 	$: boolValue = value as Writable<boolean>;
 
-	if (data !== '') {
-		if (type === 'hidden') label = 'null';
-		if (hidden) label = 'null';
-		if (type === 'time' || type === 'datetime-local') {
-			$proxyDateTime = data as string;
+	$: {
+		if (data !== '') {
+			if (type === 'hidden') label = 'null';
+			if (hidden) label = 'null';
+			if (type === 'date' || type === 'time' || type === 'datetime-local') {
+				$proxyDate = data as string;
+			}
+			$value = data;
 		}
-		if (type === 'date') {
-			$proxyDate = data as string;
-			console.log($proxyDate);
-		}
-		$value = data;
 	}
 	const setType = (node: HTMLInputElement) => {
 		node.type = type;
@@ -97,7 +97,7 @@
 			name={field}
 			class:hidden
 			class="input"
-			bind:value={$proxyDateTime}
+			bind:value={$proxyDate}
 			class:input-error={hasErrors}
 			data-invalid={hasErrors}
 			{placeholder}
@@ -129,7 +129,7 @@
 			type="datetime-local"
 			name={field}
 			class="input"
-			bind:value={$proxyDateTime}
+			bind:value={$proxyDate}
 			min={day.toISOString().slice(0, 10) + 'T00:00'}
 			max={day.toISOString().slice(0, 10) + 'T23:59'}
 			class:input-error={hasErrors}

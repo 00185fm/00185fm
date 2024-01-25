@@ -76,6 +76,5 @@ export const updateScheduledItem = z.object({
 	artist: z.string().optional(),
 	date: z.date().optional(),
 	title: z.string().optional(),
-	schedule: z.string(),
 	episode: z.string().optional()
 });

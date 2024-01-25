@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dateFormat, hourFormat } from '$lib/client/utility';
+	import { dateFormat, hourFormat, slugify } from '$lib/client/utility';
 	import {
 		type ModalSettings,
 		getModalStore,
@@ -74,7 +74,9 @@
 			<div class="p-4">
 				<h2 class="h2">{dateFormat(schedule.date, true)}</h2>
 				<p>{schedule.info}</p>
-				<p class="text-primary-500 font-bold text-lg">{schedule.manual ? 'Manual' : 'Automated'}</p>
+				<p class="text-primary-500 font-bold text-lg">
+					{schedule.manual ? '♟ Manual' : '🤖 Automated'}
+				</p>
 			</div>
 			<div class="btn-group-vertical lg:btn-group variant-ghost mt-auto mb-auto">
 				<button
@@ -138,15 +140,20 @@
 										{/if}
 									</td>
 									<td class="space-x-2">
-										{#if schedule.manual}
-											<button
-												class="btn-icon btn-icon-sm variant-ghost"
-												on:click={() => {
-													updateForm = true;
-												}}>⚙️</button
+										<a
+											class="btn-icon btn-icon-sm variant-ghost"
+											href={`/schedules/${slugify(dateFormat(schedule.date, true))}/${item.id}`}
+											>⚙️</a
+										>
+										<form
+											class="inline-block"
+											action="?/deleteScheduledItem&id={item.id}"
+											method="post"
+										>
+											<button type="submit" class="btn-icon btn-icon-sm variant-ghost-primary"
+												>🗑</button
 											>
-										{/if}
-										<button class="btn-icon btn-icon-sm variant-ghost-primary">🗑</button>
+										</form>
 									</td>
 								</tr>
 							{/each}
@@ -176,22 +183,11 @@
 				superform={superformCreate}
 				showRequiredIndicator={true}
 			>
-				{#if schedule.manual}
-					<Input type="text" field="artist" />
-					<Input type="text" field="title" />
-					<Input
-						type="time"
-						field="date"
-						label="When"
-						day={new Date(schedule.date)}
-						data={schedule.date}
-					/>
-				{/if}
 				<Input type="hidden" field="schedule" data={schedule.id} />
 				<Input type="custom" field="episode">
 					<EpisodeSelector manual={schedule.manual} allEpisodes={episodes} />
 				</Input>
-
+				<Input type="time" field="date" label="When" day={new Date(schedule.date)} />
 				<SubmitButton field="Create Item" />
 			</Form>
 		</div>
@@ -203,25 +199,6 @@
 				<button class="btn-icon variant-filled" on:click={() => (updateForm = false)}>✕</button>
 			</div>
 			<Form action="?/updateSchedule" superform={superformUpdate} showRequiredIndicator={true}>
-				<!-- {#if schedule.manual}
-					<Input type="text" field="artist" />
-					<Input type="text" field="title" />
-					<Input
-						type="time"
-						field="date"
-						label="When"
-						day={new Date(schedule.date)}
-						data={schedule.date}
-					/>
-				{/if}
-				<Input type="hidden" field="schedule" data={schedule.id} />
-				<Input type="custom" field="episode">
-					<EpisodeSelector
-						manual={schedule.manual}
-						episode_id={schedule.episode}
-						allEpisodes={episodes}
-					/>
-				</Input> -->
 				<Input type="hidden" field="id" data={schedule.id} />
 				<SlideToggle
 					active="bg-primary-500"
