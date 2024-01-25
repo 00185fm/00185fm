@@ -6,14 +6,18 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { slugify } from '$lib/server/utility';
 import type { PageServerLoad } from './$types';
 import { PUBLIC_DEF_PLAYLIST_ID } from '$env/static/public';
+import { file_url } from '$lib/client/utility';
 
-export const load: PageServerLoad = async ({ locals, cookies }) => {
+export const load: PageServerLoad = async ({ locals, cookies, parent }) => {
 	try {
 		if (!locals?.user) throw redirect(302, '/login');
+		const show = (await parent()).show;
 		const cookiesParsed = JSON.parse(cookies.get('pb_auth') || '');
 		const createForm = await superValidate(newEpisode);
 		const updateForm = await superValidate(updateShow);
-		return { createForm, updateForm, token: cookiesParsed.token };
+		const image = file_url(show.id, show.image, '?thumb=1000x1000', show.collectionName);
+
+		return { createForm, updateForm, token: cookiesParsed.token, image };
 	} catch (e) {
 		throw error(404);
 	}

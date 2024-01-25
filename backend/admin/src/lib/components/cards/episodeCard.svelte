@@ -10,7 +10,7 @@
 	$: url = PUBLIC_DEFAUL_ART;
 	$: {
 		if (episode.image !== '') {
-			url = file_url(episode.id, episode.image, '?thumb=300x300');
+			url = file_url(episode.id, episode.image, '?thumb=300x300', episode.collectionName);
 		} else {
 			url = PUBLIC_DEFAUL_ART;
 		}

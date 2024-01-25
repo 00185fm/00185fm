@@ -27,6 +27,7 @@
 		taintedMessage: null,
 		validators: newEpisode,
 		onResult({ result }) {
+			// @ts-ignore
 			created = result.data.created;
 			if (result.type === 'success') {
 				lock_upload = false;

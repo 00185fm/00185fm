@@ -7,12 +7,13 @@
 
 	export let token: string;
 	export let item: RecordModel;
+
 	export let form = true;
 	export let uploading: boolean = false;
 
 	export let uploadItems = ['image', 'audio'];
 
-	let imageFile: FileList;
+	let imageFile: FileList | undefined;
 	let audioFile: FileList;
 	let imageUrl: string | ArrayBuffer | null = '';
 
@@ -51,7 +52,14 @@
 				goto($page.url);
 			};
 
-			xhr.open('PATCH', env.PUBLIC_POCKETBASE_URL + '/api/collections/episodes/records/' + item.id);
+			xhr.open(
+				'PATCH',
+				env.PUBLIC_POCKETBASE_URL +
+					'/api/collections/' +
+					item.collectionName +
+					'/records/' +
+					item.id
+			);
 			xhr.setRequestHeader('Authorization', token);
 			xhr.send(formData);
 		} catch (error) {

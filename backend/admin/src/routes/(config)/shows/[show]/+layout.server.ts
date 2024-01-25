@@ -21,7 +21,7 @@ export const load = async ({ params }) => {
 				})
 			);
 			for (let i = 0; i < episodes.length; i++) {
-				const url = file_url(episodes[i].id, episodes[i].audio, '');
+				const url = file_url(episodes[i].id, episodes[i].audio, '', episodes[i].collectionName);
 				if (url !== '') {
 					audioUrls.push(url);
 				}

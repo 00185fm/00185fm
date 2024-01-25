@@ -18,8 +18,18 @@
 
 	onMount(() => {
 		if (episode?.image !== '') {
-			url = file_url(String(episode?.id), episode?.image, '?thumb=1000x1000');
-			url_small = file_url(String(episode?.id), episode?.image, '?thumb=20x20');
+			url = file_url(
+				String(episode?.id),
+				episode?.image,
+				'?thumb=1000x1000',
+				episode?.collectionName
+			);
+			url_small = file_url(
+				String(episode?.id),
+				episode?.image,
+				'?thumb=20x20',
+				episode?.collectionName
+			);
 		}
 	});
 	let img: HTMLImageElement;
@@ -45,7 +55,7 @@
 		dialog.close();
 	}}
 >
-	<div class="font-myriad grid grid-flow-row gap-5 lg:grid-cols-2 lg:gap-10">
+	<div class="grid grid-flow-row gap-5 font-myriad lg:grid-cols-2 lg:gap-10">
 		<div id="right" class="order-last lg:order-first">
 			<slot name="header">
 				<div class="{header_bar} header_bar">
@@ -71,7 +81,7 @@
 		</div>
 		<div id="left" class="order-first space-y-3 lg:order-last">
 			<slot name="image">
-				<div class="aspect-1 relative">
+				<div class="relative aspect-1">
 					<div
 						bind:this={img_small}
 						class="blur-load absolute left-0 top-0 h-full w-full rounded-3xl bg-center opacity-100"

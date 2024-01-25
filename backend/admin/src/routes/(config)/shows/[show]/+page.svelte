@@ -4,10 +4,13 @@
 	import CreateEpisode from '$lib/components/crud/createEpisode.svelte';
 	import EpisodeCard from '$lib/components/cards/episodeCard.svelte';
 	export let data;
+	let tabSet: number = 0;
 	let createForm = false;
 	let updateForm = false;
 	$: episodes = data.episodes;
 	$: show = data.show;
+	$: image = data.image;
+	const { token } = data;
 	let cardDimension: number = 0;
 	import AlignJustify from '$lib/icons/align-justify.svelte';
 	import GalleryThumbnails from '$lib/icons/gallery-thumbnails.svelte';
@@ -100,6 +103,23 @@
 			>
 		</div>
 	</div>
+
+	<div class="p-5">
+		{#if show.image}
+			<img class="w-full max-h-40 object-cover object-left-top" src={image} alt="" />
+		{:else}
+			<span class="flex justify-center lg:justify-start items-center gap-1">
+				⛔️ Image is missing <button
+					class="btn sm:btn-sm sm:px-3 variant-ghost block sm:inline-block"
+					on:click={() => {
+						updateForm = true;
+						tabSet = 1;
+					}}>Go Update! ✨</button
+				>
+			</span>
+		{/if}
+	</div>
+
 	{#if lock_delete}
 		<DeleteDenyCard bind:lock_delete />
 	{/if}
@@ -108,7 +128,7 @@
 	{#if createForm}
 		<CreateEpisode {data} bind:createForm />
 	{:else if updateForm}
-		<UpdateShow bind:updateForm {show} form={data.updateForm} />
+		<UpdateShow {image} {token} bind:updateForm {show} bind:tabSet form={data.updateForm} />
 	{/if}
 	{#if episodes.length > 0}
 		<div class="my-2">
