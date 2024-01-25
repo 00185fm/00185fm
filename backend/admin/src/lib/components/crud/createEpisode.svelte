@@ -74,8 +74,9 @@
 				<Input
 					type="text"
 					field="author"
+					label="Artist"
 					data={data.show.author}
-					info="You can choose an author different from the show's one"
+					info="You can choose an artist different from the show's one"
 				/>
 				<Input
 					required={false}
@@ -85,16 +86,17 @@
 					info="This is the Artwork Credits field. You can use it to credit the artist who made the artwork for this episode."
 				/>
 				<Input
-					info="Should this episode be public? If you choose 'no' it will be hidden from the public website. If 'yes' it will be published on the selected date."
+					info="Should this episode be already public? If you choose 'no' it will be hidden until the selected date."
 					required={false}
 					type="switch"
 					field="public"
-					text_action="Should this episode be public?"
+					text_action="Should this episode be already public?"
 				/>
 				<Input
-					info="Choose a new date. Be accurate with hours if you can."
+					info="Choose a new date. Be accurate with hours if you can. If not, this episode will be published on this date."
 					type="datetime-local"
 					field="date"
+					label="Release Date"
 				/>
 				<Input
 					info="<p>Use any <a href='https://00185fm.github.io/tw-editor/' target='_blank' style='text-shadow: rgb(255, 253, 0) 9px 3px 5px;' class='text-secondary-700 font-bold text-xl'>rich text to html editor</a> to customize the description styling (<a href='https://wordtohtml.net/' target='_blank' class='btn-icon btn-icon-sm variant-filled-primary'>👁</a>). Then activate the 'Edit' switch and copy&paste the result in the box.</p> <p class='text-sm text-red-500'>Images are not allowed yet.</p>"
