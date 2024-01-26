@@ -216,7 +216,6 @@ services:
     restart: always
     environment:
       - ORIGIN
-      - BODY_SIZE_LIMIT=0
       - PUBLIC_NP_ID
       - PUBLIC_DEF_PLAYLIST_ID
       - PRIVATE_POCKETBASE_URL
