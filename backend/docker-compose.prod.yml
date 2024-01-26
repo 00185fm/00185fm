@@ -8,8 +8,6 @@ services:
     image: traefik:v2.10.7
     security_opt:
       - no-new-privileges:true
-    env_file:
-      - .env
     environment:
       - CF_API_EMAIL
       - CF_DNS_API_TOKEN
@@ -60,8 +58,6 @@ services:
 
   ################ POCKETBASE
   pocketbase:
-    env_file:
-      - .env
     build:
       context: ./pocketbase
       args:
@@ -122,8 +118,6 @@ services:
 
   ################ ICECAST
   icecast:
-    env_file:
-      - .env
     image: moul/icecast
     container_name: icecast
     restart: always
@@ -153,8 +147,6 @@ services:
 
   ################ LIQUIDSOAP
   liquidsoap:
-    env_file:
-      - .env
     image: "savonet/liquidsoap-alpine:v2.1.4"
     container_name: liquidsoap
     restart: always
@@ -196,8 +188,6 @@ services:
 
   ################ FRONTEND
   admin:
-    env_file:
-      - .env
     build:
       context: ./admin
       args:
