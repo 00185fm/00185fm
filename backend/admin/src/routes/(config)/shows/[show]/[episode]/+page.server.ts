@@ -21,8 +21,8 @@ export const load = async ({ parent, params, locals, cookies }) => {
 	if (!episode) {
 		throw redirect(302, '/shows/' + params.show);
 	}
-	const audio = file_url(episode.id, episode.audio, '');
-	const image = file_url(episode.id, episode.image, '?thumb=1000x1000');
+	const audio = file_url(episode.id, episode.audio, '', episode.collectionName);
+	const image = file_url(episode.id, episode.image, '?thumb=1000x1000', episode.collectionName);
 	return { episode, form, token: cookiesParsed.token, playlists, tags, image, audio };
 };
 

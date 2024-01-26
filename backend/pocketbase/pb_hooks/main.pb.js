@@ -1,3 +1,5 @@
+/// <reference path="../pb_data/types.d.ts" />
+
 routerAdd(
   "POST",
   "/radio/nowplaying",
@@ -47,7 +49,6 @@ routerAdd("GET", "/playlists/:title", (c) => {
 
     const records = $app.dao().findRecordsByFilter(
       "episodes", // collection
-
       "playlists ~'" + playlist.id + "'" // filter
     );
 
@@ -101,10 +102,3 @@ routerAdd("GET", "/playlists/:title", (c) => {
 
   return c.string(200, string);
 });
-
-// ADAPT THIS TO CHECK IF THERE IS AN EPISODE TO EDIT -> public on date
-
-// prints "Hello!" every 2 minutes ---------
-// cronAdd("hello", "*/2 * * * *", () => {
-//   console.log("Hello!")
-// })

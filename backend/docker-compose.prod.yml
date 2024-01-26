@@ -3,11 +3,14 @@ version: "3.8"
 services:
   ################ TRAEFIK
   traefik:
-    image: traefik:v2.10.4
     container_name: traefik
     restart: unless-stopped
+    image: traefik:v2.10.7
     security_opt:
       - no-new-privileges:true
+    environment:
+      - CF_API_EMAIL
+      - CF_DNS_API_TOKEN
     command:
       # We are going to use the docker provider
       - "--providers.docker"
@@ -20,7 +23,7 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       # Enable ACME (Let's Encrypt): automatic SSL.
-      - "--certificatesresolvers.letsencrypt.acme.email=CF_API_EMAIL"
+      - "--certificatesresolvers.letsencrypt.acme.email=${CF_API_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
       - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
@@ -35,9 +38,6 @@ services:
     networks:
       traefik-net:
         ipv4_address: 10.5.0.5
-    environment:
-      - CF_API_EMAIL
-      - CF_DNS_API_TOKEN
     ports:
       - 80:80
       - 443:443
@@ -62,7 +62,7 @@ services:
       context: ./pocketbase
       args:
         - PB_PORT
-        - PB_VERSION=0.19.3
+        - PB_VERSION=0.21.1
     command: [
         "./pocketbase",
         "serve",
@@ -83,10 +83,12 @@ services:
       - LIQ_TOKEN
       - PB_FILES_URL
       - ALLOWED_ORIGINS
+      - DEF_PLAYLIST_ID
     volumes:
       - ./pocketbase/pb_data:/pb/pb_data
       - ./pocketbase/pb_hooks:/pb/pb_hooks
       - ./pocketbase/pb_public:/pb/pb_public
+      - ./pocketbase/pb_migrations:/pb/pb_migrations
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pocketbase.rule=Host(`pb.00185fm.eu`)"
@@ -204,7 +206,6 @@ services:
     restart: always
     environment:
       - ORIGIN
-      - BODY_SIZE_LIMIT=0
       - PUBLIC_NP_ID
       - PUBLIC_DEF_PLAYLIST_ID
       - PRIVATE_POCKETBASE_URL

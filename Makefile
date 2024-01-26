@@ -1,30 +1,33 @@
-MAKEFLAGS += -j2
+.DEFAULT_GOAL := help
+.PHONY: help
 
-be_docker:
-	@echo "🚀 Launching the Backend" 
+help: ## 🛟  Show this help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-7s\033[0m %s\n", $$1, $$2}'
+
+be_docker: ## 🎒 Launch Backend
+	@echo "🎒 Launching Backend" 
 	cd backend && docker compose up -d
-fe:
-	@echo "🚀 Launching the Frontend" 
+
+fe: ## 🌐 Launch Frontend
+	@echo "🌐 Launching Frontend" 
 	cd frontend && npm install && npm run dev
 
-admin:
-	@echo "🚀 Launching the Admin" 
+admin: ## 👷 Launch Admin
+	@echo "👷 Launching Admin" 
 	cd backend/admin && npm install && npm run dev
 
-up_admin: 
-	be_docker admin
+up_admin: be_docker admin ## 🧪 Launch Backend + Admin  (recommended)
 
-up_fe:
-	be_docker fe
+up_fe: be_docker fe ## 💔 Launch Backend + Frontend
 
-up: 
-	@echo "🚀 Launching 00185fm - Local"
+up: ## 🌕 Launch Full Stack - Local (recommended)
+	@echo "🌕 Launching Full Stack - Local"
 	be_docker admin fe
 
-down:
-	@echo "🛑 Stopping the Backend" 
+down: ## 🛑 Stop Backend
+	@echo "🛑 Stopping Backend" 
 	cd backend && docker compose down
 
-prune:
+prune: ## 🧹 Clear Docker
 	@echo "🧹 Clear Docker"
 	docker system prune -a

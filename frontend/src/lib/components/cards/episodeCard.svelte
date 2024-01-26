@@ -12,8 +12,8 @@
 	let url_small = env.PUBLIC_DEFAUL_ART_20;
 	$: {
 		if (episode.image !== '') {
-			url = file_url(episode.id, episode.image, '?thumb=300x300');
-			url_small = file_url(episode.id, episode.image, '?thumb=20x20');
+			url = file_url(episode.id, episode.image, '?thumb=300x300', episode.collectionName);
+			url_small = file_url(episode.id, episode.image, '?thumb=20x20', episode.collectionName);
 		}
 	}
 	let img: HTMLImageElement;
@@ -29,7 +29,7 @@
 	}}
 	class="group"
 >
-	<div class="aspect-1 relative overflow-hidden">
+	<div class="relative aspect-1 overflow-hidden">
 		<div
 			bind:this={img_small}
 			class="blur-load absolute left-0 top-0 h-full w-full bg-cover bg-center opacity-100"

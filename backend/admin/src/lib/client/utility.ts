@@ -11,10 +11,10 @@ export function removeLastSegment(inputString: string): string {
 		return inputString;
 	}
 }
-export const file_url = (id: string, filename: string, thumb: string) => {
+export const file_url = (id: string, filename: string, thumb: string, collection: string) => {
 	let url = '';
 	if (filename !== '') {
-		url = PUBLIC_POCKETBASE_URL + '/api/files/episodes/' + id + '/' + filename + thumb;
+		url = PUBLIC_POCKETBASE_URL + '/api/files/' + collection + '/' + id + '/' + filename + thumb;
 	}
 	return url;
 };

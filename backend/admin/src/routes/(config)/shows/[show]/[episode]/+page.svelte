@@ -10,7 +10,7 @@
 	import Delete from '$lib/components/crud/delete.svelte';
 	import PlaylistsSelector from '$lib/components/crud/playlistsSelector.svelte';
 	import TagsSelector from '$lib/components/crud/tagsSelector.svelte';
-	import { dateFormat } from '$lib/client/utility';
+	import { dateFormat, hourFormat } from '$lib/client/utility';
 	let tabSet: number = 0;
 	const modalStore = getModalStore();
 	export let data;
@@ -58,7 +58,7 @@
 			<div class="space-y-3 text-center sm:text-left">
 				{#if episode.date}
 					<p class="font-bold text-xl text-gray-400">
-						{dateFormat(episode.date)}
+						{dateFormat(episode.date, true)} - {hourFormat(episode.date)}
 					</p>
 				{:else}
 					<span class="flex justify-center lg:justify-start items-center gap-1">

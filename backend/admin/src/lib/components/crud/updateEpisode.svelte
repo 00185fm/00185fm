@@ -69,10 +69,11 @@
 						data={episode.title}
 					/>
 					<Input
-						info="You can choose an author different from the show's one"
+						info="You can choose an artist different from the show's one"
 						required={false}
 						type="text"
 						field="author"
+						label="Artist"
 						data={episode.author}
 					/>
 					<Input
@@ -84,12 +85,12 @@
 						data={episode.credits}
 					/>
 					<Input
-						info="Should this episode be public? If you choose 'no' it will be hidden from the public website. If 'yes' it will be published on the selected date."
+						info="Should this episode be already public? If you choose 'no' it will be hidden until the selected date."
 						required={false}
 						type="switch"
 						field="public"
 						data={episode.public}
-						text_action="Should this episode be public?"
+						text_action="Should this episode be already public?"
 					/>
 					<div class="pt-4">
 						<SlideToggle size="sm" name="date-update" bind:checked={updateDate}
@@ -99,7 +100,7 @@
 					</div>
 					{#if updateDate}
 						<Input
-							info="Choose a new date. Be accurate with hours if you can."
+							info="Choose a new date. Be accurate with hours if you can. If not, this episode will be published on this date"
 							type="datetime-local"
 							field="date"
 						/>
