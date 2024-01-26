@@ -49,7 +49,7 @@ routerAdd("GET", "/playlists/:title", (c) => {
 
     const records = $app.dao().findRecordsByFilter(
       "episodes", // collection
-      "playlists ~'" + playlist.id + "' && public = 'true'" // filter
+      "playlists ~'" + playlist.id + "'" // filter
     );
 
     return records;
