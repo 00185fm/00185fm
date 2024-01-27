@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { queryParameters } from 'sveltekit-search-params';
-	import Chip from '$lib/components/chip.svelte';
 	import InfiniteScroll from 'svelte-infinite-scroll';
 	import EpisodeCard from '$lib/components/cards/episodeCard.svelte';
 	import Modal from '$lib/components/modal/modal.svelte';
@@ -13,7 +12,10 @@
 		waitForElement
 	} from '$lib/utility/utility.js';
 	import { browser } from '$app/environment';
+	import Dates from '$lib/components/dates.svelte';
+	import Tags from '$lib/components/tags.svelte';
 	export let data;
+	const { tags, dates } = data;
 	let showModal = false;
 	$: page_index = 1;
 	let episodes: RecordModel[] = [];
@@ -79,7 +81,7 @@
 	<div class="grid grid-flow-row gap-5 overflow-hidden lg:flex lg:flex-1 lg:flex-row">
 		<div
 			id="episodes"
-			class="font-myriad no-scrollbar order-last grid grid-flow-row gap-6 overflow-y-scroll pb-4 lg:order-first lg:grid-cols-2 xl:grid-cols-3"
+			class="no-scrollbar order-last grid grid-flow-row gap-6 overflow-y-scroll pb-4 font-myriad lg:order-first lg:grid-cols-2 xl:grid-cols-3"
 		>
 			{#each episodes as episode (episode.id)}
 				<EpisodeCard {episode} {selected_episode} {showModal} />
@@ -88,35 +90,10 @@
 		</div>
 
 		<!-- TAGS -->
-		<div class="no-scrollbar h-28 overflow-x-scroll p-4 lg:h-full lg:w-[50%] lg:overflow-y-scroll">
-			{#each { length: 50 } as _, i}
-				<Chip text={'acid_' + (i + 1)} padding="px-2 m-2 mt-1" c_class="uppercase text-xs" />
-			{/each}
-		</div>
+		<Tags {tags} />
 
 		<!-- DATES -->
-		<div
-			class="no-scrollbar order-first overflow-x-scroll p-4 lg:order-last lg:w-[50%] lg:overflow-x-scroll"
-		>
-			<div class="grid w-max grid-cols-4 gap-8">
-				{#each { length: 4 } as _, year}
-					<div class="grid grid-flow-col gap-2.5 lg:grid-flow-row">
-						<span class="font-basteleur text-stroke text-2xl">{'202' + (year + 1)}</span>
-						{#each { length: 12 } as _, month}
-							<Chip
-								text={'jan' + (month + 1)}
-								outline="outline-dashed outline-1 outline-black"
-								padding="p-2 justify-center"
-								size="w-fit"
-								c_class="text-xl"
-								bg_color="transparent"
-								font="font-basteleur"
-							/>
-						{/each}
-					</div>
-				{/each}
-			</div>
-		</div>
+		<Dates {dates} />
 	</div>
 </div>
 
