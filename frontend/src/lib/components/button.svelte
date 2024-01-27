@@ -9,12 +9,11 @@
 </script>
 
 {#if event}
-	<a
+	<button
 		class="relative {c_class} group"
-		on:click|preventDefault={() => {
+		on:click={() => {
 			dispatch('subClick');
 		}}
-		href="/"
 	>
 		<img
 			class="absolute inset-0 h-full w-full object-cover group-hover:shadow-black group-hover:drop-shadow-lg"
@@ -24,7 +23,7 @@
 		<span class="absolute inset-0 flex items-center justify-center p-2 font-basteleur text-lg"
 			>{text}</span
 		>
-	</a>
+	</button>
 {:else if url}
 	<a class="relative {c_class} group" href={url} target="_blank">
 		<img
@@ -39,7 +38,8 @@
 {/if}
 
 <style>
-	a {
+	a,
+	button {
 		min-width: 15rem;
 		height: 4rem;
 	}
