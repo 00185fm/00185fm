@@ -22,7 +22,7 @@
 	}
 </script>
 
-<div class="flex items-center justify-center p-4">
+<div class="col-span-2 flex h-full w-full max-w-xs items-center justify-center p-4">
 	<button class="-mr-4" on:click={mute}>
 		<VolumeIcon />
 	</button>

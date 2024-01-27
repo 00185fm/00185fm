@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let size = 50;
-	export let stroke = 0.7;
+	export let stroke = 0.5;
 </script>
 
 <svg

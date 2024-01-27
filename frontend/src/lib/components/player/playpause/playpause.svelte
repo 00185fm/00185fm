@@ -26,8 +26,8 @@
 	}}
 >
 	{#if icon === 'play'}
-		<PlayIcon size={60} />
+		<PlayIcon size={70} />
 	{:else}
-		<PauseIcon size={60} />
+		<PauseIcon size={70} />
 	{/if}
 </button>
