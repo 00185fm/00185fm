@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Button from '$lib/components/button.svelte';
 	import Searchbar from '$lib/components/searchbar.svelte';
+	import type { RecordModel } from 'pocketbase';
 	export let about_open: boolean = false;
+	export let radio_infos: RecordModel | undefined;
 </script>
 
 <header class="z-30 h-28 w-full p-4 lg:p-10">
@@ -14,18 +16,20 @@
 					class="hover:shadow-black hover:drop-shadow-2xl"
 				/>
 			</a>
-			<Button text={'telegram'} url={'/'} c_class="hidden lg:block" />
-			<Button text={'support us'} url={'/'} c_class="hidden lg:block" />
+			<Button text={'telegram'} url={radio_infos?.telegram} c_class="hidden lg:block" />
+			<Button text={'support us'} url={radio_infos?.support} c_class="hidden lg:block" />
 		</div>
 		<div class="flex items-center justify-center">
 			<div class="block lg:flex">
-				<a href="/archive" class="font-basteleur pr-2 lg:pr-32 lg:text-lg">/archive</a>
+				<a href="/archive" class="pr-2 font-basteleur lg:pr-32 lg:text-lg">/archive</a>
 				<button
 					on:click={() => (about_open = !about_open)}
-					class="font-basteleur cursor-pointer pr-2 lg:pr-24 lg:text-lg">/about</button
+					class="cursor-pointer pr-2 font-basteleur lg:pr-24 lg:text-lg">/about</button
 				>
 			</div>
-			<Searchbar />
+			<div>
+				<Searchbar />
+			</div>
 		</div>
 	</div>
 </header>
