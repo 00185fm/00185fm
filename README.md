@@ -2,6 +2,10 @@
 
 ## Backend
 
+### Proxy
+
+- Traefik v2
+
 ### Radio
 
 - Icecast v2.4.4
@@ -10,7 +14,7 @@
 
 ### Admin
 
-- Pocketbase v0.19.1
+- Pocketbase v0.21.1
 
   #### Admin UI
 
@@ -21,6 +25,8 @@
 ### Storage
 
 - Wasabi Hot Cloud Storage
+
+- Seaweedfs
 
 ## Frontend
 

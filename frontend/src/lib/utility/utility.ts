@@ -2,12 +2,27 @@ import { pb } from '$lib/pocketbase';
 import type { RecordModel, ListResult } from 'pocketbase';
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 
-export const dateFormat = (dateString: string) => {
+export const dateFormat = (
+	dateString: string,
+	showDay: boolean = false,
+	showYear: boolean = true
+) => {
 	const date = new Date(dateString);
-	const mese = date.toLocaleString('default', { month: 'short' });
-	const anno = date.getFullYear();
+	const day = date.getDate();
+	const month = date.toLocaleString('default', { month: 'short' });
+	const year = date.getFullYear();
 
-	const result = `${mese.toLocaleLowerCase()} ${anno}`;
+	const result = `${showDay ? day + ' ' : ''}${month.toLocaleLowerCase()}${showYear ? ' ' + year : ''}`;
+	return result;
+};
+
+export const hourFormat = (dateString: string) => {
+	const date = new Date(dateString);
+	const hour = date.getHours();
+	// minutes should be two digits
+	const minutes = ('0' + date.getMinutes()).slice(-2);
+
+	const result = `${hour}:${minutes}`;
 	return result;
 };
 
@@ -29,7 +44,8 @@ export const fetchEpisodes_paginated = async (i_page: number) => {
 			requestKey: 'page_' + i_page,
 			skipTotal: true,
 			sort: '-date',
-			expand: 'show'
+			expand: 'show',
+			filter: 'public=true'
 		});
 	} catch (error) {
 		console.log(error);
@@ -55,9 +71,9 @@ export const fetchRecord = async (id: string, collection: string) => {
 
 export const fetchAllRecords = async (
 	collection: string,
-	sort: string,
-	expand: string,
-	filter: string
+	sort: string = '',
+	expand: string = '',
+	filter: string = ''
 ) => {
 	const result: RecordModel[] = await pb
 		.collection(collection)
