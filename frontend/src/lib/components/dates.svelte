@@ -7,7 +7,7 @@
 <div
 	class="no-scrollbar order-first overflow-x-scroll p-4 lg:order-last lg:w-[50%] lg:overflow-x-scroll"
 >
-	<div class="grid w-max grid-cols-4 gap-8">
+	<div class="grid w-max grid-flow-col gap-8">
 		{#each dates as year}
 			<div class="grid grid-flow-col gap-2.5 lg:grid-flow-row">
 				<span class="text-stroke font-basteleur text-2xl">{year.year}</span>

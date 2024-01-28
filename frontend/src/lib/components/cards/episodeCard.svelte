@@ -5,11 +5,12 @@
 	import { queryParam } from 'sveltekit-search-params';
 	const e_query = queryParam('e');
 
+	import { selected_episode } from '$lib/utility/stores';
 	export let episode: RecordModel;
-	export let selected_episode;
 	export let showModal = false;
-	let url = env.PUBLIC_DEFAUL_ART_300;
-	let url_small = env.PUBLIC_DEFAUL_ART_20;
+
+	$: url = env.PUBLIC_DEFAUL_ART_300;
+	$: url_small = env.PUBLIC_DEFAUL_ART_20;
 	$: {
 		if (episode.image !== '') {
 			url = file_url(episode.id, episode.image, '?thumb=300x300', episode.collectionName);
@@ -23,7 +24,7 @@
 <button
 	id={'e_' + episode.id}
 	on:click={() => {
-		selected_episode = episode;
+		$selected_episode = episode;
 		showModal = true;
 		$e_query = slugify(episode.title);
 	}}

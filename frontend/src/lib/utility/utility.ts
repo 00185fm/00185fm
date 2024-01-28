@@ -44,7 +44,7 @@ export const fetchEpisodes_paginated = async (i_page: number) => {
 			requestKey: 'page_' + i_page,
 			skipTotal: true,
 			sort: '-date',
-			expand: 'show',
+			expand: 'show,tags',
 			filter: 'public=true'
 		});
 	} catch (error) {
