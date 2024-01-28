@@ -1,29 +1,37 @@
 <script lang="ts">
-	import { PUBLIC_DEFAUL_ART, PUBLIC_DEFAUL_ART_20 } from '$env/static/public';
+	import { browser } from '$app/environment';
 
+	const PUBLIC_DEFAUL_ART = '/img/placeholder/00185fm_default_image.png';
+	const PUBLIC_DEFAUL_ART_20 = '/img/placeholder/00185fm_default_image_20px.png';
 	import { selected_episode } from '$lib/utility/stores';
 	import { file_url } from '$lib/utility/utility';
-	import { onMount } from 'svelte';
-	$: url = PUBLIC_DEFAUL_ART;
-	$: url_small = PUBLIC_DEFAUL_ART_20;
-	onMount(() => {
-		if ($selected_episode?.image !== '') {
-			url = file_url(
-				String($selected_episode?.id),
-				$selected_episode?.image,
-				'?thumb=1000x1000',
-				$selected_episode?.collectionName
-			);
-			url_small = file_url(
-				String($selected_episode?.id),
-				$selected_episode?.image,
-				'?thumb=20x20',
-				$selected_episode?.collectionName
-			);
-		}
-	});
+
 	let img: HTMLImageElement;
 	let img_small: HTMLDivElement;
+
+	$: url = PUBLIC_DEFAUL_ART;
+	$: url_small = PUBLIC_DEFAUL_ART_20;
+	$: {
+		if (browser) {
+			if ($selected_episode?.image !== '') {
+				url = file_url(
+					String($selected_episode?.id),
+					$selected_episode?.image,
+					'?thumb=1000x1000',
+					$selected_episode?.collectionName
+				);
+				url_small = file_url(
+					String($selected_episode?.id),
+					$selected_episode?.image,
+					'?thumb=20x20',
+					$selected_episode?.collectionName
+				);
+			} else {
+				url = PUBLIC_DEFAUL_ART;
+				url_small = PUBLIC_DEFAUL_ART_20;
+			}
+		}
+	}
 </script>
 
 <div class="relative aspect-1 max-h-fit">
