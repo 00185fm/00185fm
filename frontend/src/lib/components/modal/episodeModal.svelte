@@ -1,20 +1,31 @@
 <script lang="ts">
-	import { dateFormat } from '$lib/utility/utility';
+	import { dateFormat, fetchAllRecords } from '$lib/utility/utility';
 	import Image from '../image.svelte';
 	import { queryParam } from 'sveltekit-search-params';
 	import Chip from '../chip.svelte';
 	import MoreEpisodes from '../cards/moreEpisodes.svelte';
 	import { selected_episode, showModal } from '$lib/utility/stores';
 	import type { RecordModel } from 'pocketbase';
+	import { onMount } from 'svelte';
 	let dialog: HTMLDialogElement;
-	export let episodes: RecordModel[] = [];
-	const related_episodes: RecordModel[] = episodes.filter(
-		(episode) => episode.show === $selected_episode?.show && episode.id !== $selected_episode?.id
-	);
+	let related_episodes: RecordModel[] = [];
 
 	const e_query = queryParam('e');
 
 	$: if (dialog && $showModal) dialog.showModal();
+
+	onMount(async () => {
+		try {
+			related_episodes = await fetchAllRecords(
+				'episodes',
+				'-date',
+				'show',
+				`show="${$selected_episode?.show}" && public=true`
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	});
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
@@ -56,16 +67,16 @@
 				</div>
 			</slot>
 			<slot name="content">
-				<div class="grid max-h-[700px] grid-cols-2 overflow-hidden pt-4">
+				<div class="grid grid-cols-2 overflow-hidden pt-4">
 					<span
 						id="description"
-						class="no-scrollbar max-h-[700px] overflow-y-scroll p-2 text-justify font-myriad text-xl"
+						class="no-scrollbar max-h-[710px] overflow-y-scroll p-2 pb-5 text-justify font-myriad text-xl"
 					>
 						{@html $selected_episode?.description}
 					</span>
 					<span
 						id="tracklist"
-						class="no-scrollbar max-h-[700px] overflow-y-scroll p-2 text-right font-sans text-xl"
+						class="no-scrollbar max-h-[710px] overflow-y-scroll p-2 pb-5 text-right font-sans text-xl"
 					>
 						{@html $selected_episode?.tracklist
 							? $selected_episode?.tracklist

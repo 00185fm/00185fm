@@ -96,5 +96,5 @@
 </div>
 
 {#if $showModal}
-	<EpisodeModal {episodes} />
+	<EpisodeModal />
 {/if}
