@@ -92,7 +92,7 @@
 					<div class="py-2">
 						<p class="text-xl font-bold">Tracklist</p>
 						<p class="text-left whitespace-pre-line">
-							{episode.tracklist}
+							{@html episode.tracklist}
 						</p>
 					</div>
 				{:else}
