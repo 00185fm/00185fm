@@ -13,7 +13,7 @@
 				<span class="text-stroke font-basteleur text-2xl">{year.year}</span>
 				{#each year.months as month}
 					<Chip
-						text={month.month}
+						text={new Date(month.month).toLocaleString('default', { month: 'short' })}
 						outline="outline-dashed outline-1 outline-black"
 						padding="p-2 justify-center"
 						size="w-fit"
