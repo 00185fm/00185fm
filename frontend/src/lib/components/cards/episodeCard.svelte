@@ -1,15 +1,18 @@
 <script lang="ts">
-	import { env } from '$env/dynamic/public';
 	import { file_url, slugify } from '$lib/utility/utility';
 	import type { RecordModel } from 'pocketbase';
 	import { queryParam } from 'sveltekit-search-params';
 	const e_query = queryParam('e');
 
+	const PUBLIC_DEFAUL_ART_300 = '/img/placeholder/00185fm_default_image_300px.png';
+	const PUBLIC_DEFAUL_ART_20 = '/img/placeholder/00185fm_default_image_20px.png';
+
+	import { selected_episode } from '$lib/utility/stores';
 	export let episode: RecordModel;
-	export let selected_episode;
 	export let showModal = false;
-	let url = env.PUBLIC_DEFAUL_ART_300;
-	let url_small = env.PUBLIC_DEFAUL_ART_20;
+
+	$: url = PUBLIC_DEFAUL_ART_300;
+	$: url_small = PUBLIC_DEFAUL_ART_20;
 	$: {
 		if (episode.image !== '') {
 			url = file_url(episode.id, episode.image, '?thumb=300x300', episode.collectionName);
@@ -23,7 +26,7 @@
 <button
 	id={'e_' + episode.id}
 	on:click={() => {
-		selected_episode = episode;
+		$selected_episode = episode;
 		showModal = true;
 		$e_query = slugify(episode.title);
 	}}
