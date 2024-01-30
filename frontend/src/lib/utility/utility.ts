@@ -1,6 +1,8 @@
 import { pb } from '$lib/pocketbase';
 import type { RecordModel, ListResult } from 'pocketbase';
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+import { PUBLIC_POCKETBASE_URL, PUBLIC_RADIO_URL } from '$env/static/public';
+import { player } from '$lib/components/player/audio.svelte';
+import { archive_episode, playing_archive, selected_episode } from '$lib/utility/stores';
 
 export const dateFormat = (
 	dateString: string,
@@ -166,4 +168,50 @@ export const slugify = (...args: (string | number)[]): string => {
 		.trim()
 		.replace(/[^a-z0-9 ]/g, '') // remove all chars not letters, numbers and spaces (to be replaced)
 		.replace(/\s+/g, '-'); // separator
+};
+
+export const playArchive = (id: string | undefined, url: string) => {
+	try {
+		if (!url.startsWith('https://') && id) {
+			url = file_url(id, url, '', 'episodes');
+		}
+		if (!player.paused) {
+			player.pause();
+		}
+		player.src = url;
+		player.play();
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export const handleArchivePlay = () => {
+	let episode: RecordModel | undefined;
+	selected_episode.subscribe((e) => (episode = e));
+	playArchive(episode?.id, episode?.audio);
+	archive_episode.set(episode);
+	playing_archive.set(true);
+};
+
+export const handleBackLive = () => {
+	playing_archive.set(false);
+	if (!player.paused) {
+		player.pause();
+	}
+	player.src = PUBLIC_RADIO_URL;
+	player.play();
+	selected_episode.set(undefined);
+	archive_episode.set(undefined);
+};
+
+export const formatSecondsToHMS = (seconds: number): string => {
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	const remainingSeconds = Math.round(seconds % 60);
+
+	const formattedHours = hours > 0 ? `${hours}:` : '';
+	const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+	const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
+
+	return `${formattedHours}${formattedMinutes}:${formattedSeconds}`;
 };

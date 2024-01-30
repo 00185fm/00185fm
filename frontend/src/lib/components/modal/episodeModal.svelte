@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dateFormat, fetchAllRecords } from '$lib/utility/utility';
+	import { dateFormat, fetchAllRecords, handleArchivePlay } from '$lib/utility/utility';
 	import Image from '../image.svelte';
 	import { queryParam } from 'sveltekit-search-params';
 	import Chip from '../chip.svelte';
@@ -19,7 +19,7 @@
 			related_episodes = await fetchAllRecords(
 				'episodes',
 				'-date',
-				'show',
+				'show,tags',
 				`show="${$selected_episode?.show}" && public=true`
 			);
 		} catch (error) {
@@ -93,7 +93,11 @@
 	</div>
 	<div class="grid grid-cols-2 gap-5 pt-3 align-top lg:gap-10">
 		<div class="border_b_radius -mt-12 flex items-center justify-between px-8 pb-5">
-			<button class="text-5xl focus:outline-none">PLAY</button>
+			<button
+				disabled={Boolean(!$selected_episode?.audio)}
+				class="text-5xl focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400"
+				on:click={handleArchivePlay}>PLAY</button
+			>
 			<div>
 				{#if $selected_episode?.expand?.tags}
 					{#each $selected_episode?.expand?.tags as tag, i}
