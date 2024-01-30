@@ -8,7 +8,7 @@
 	import Dates from '$lib/components/dates.svelte';
 	import Tags from '$lib/components/tags.svelte';
 	import type { RecordModel, ListResult } from 'pocketbase';
-	import { selected_episode, showModal } from '$lib/utility/stores';
+	import { selected_episode, showModal, filter } from '$lib/utility/stores';
 	import {
 		animateScroll,
 		fetchEpisodes_paginated,
@@ -29,6 +29,7 @@
 		e: true
 	});
 
+	$: console.log($filter);
 	onMount(async () => {
 		episodes = [...newBatch.items];
 	});

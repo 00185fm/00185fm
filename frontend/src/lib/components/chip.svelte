@@ -4,13 +4,20 @@
 	export let font: string = 'font-sans';
 	export let rounded: string = 'rounded-3xl';
 	export let bg_color: string = 'bg-slate-100';
-	export let outline: string = 'outline outline-1 outline-black';
+	export let outline: string = `outline outline-1 outline-black`;
 	export let padding: string = 'px-2';
 	export let size: string = 'h-[23px] w-fit';
+	export let active: boolean = false;
+	let button: HTMLButtonElement;
 </script>
 
-<button class="{font} {size} {rounded} {bg_color} {c_class} {outline} {padding}">
-	{text}
+<button
+	on:click
+	bind:this={button}
+	class:outline-red-500={active}
+	class="{font} {size} {rounded} {bg_color} {c_class} {outline} {padding}"
+>
+	<slot>{text}</slot>
 </button>
 
 <style>

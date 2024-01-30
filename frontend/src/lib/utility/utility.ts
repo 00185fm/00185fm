@@ -21,7 +21,6 @@ export const dateFormat = (
 export const hourFormat = (dateString: string) => {
 	const date = new Date(dateString);
 	const hour = date.getHours();
-	// minutes should be two digits
 	const minutes = ('0' + date.getMinutes()).slice(-2);
 
 	const result = `${hour}:${minutes}`;

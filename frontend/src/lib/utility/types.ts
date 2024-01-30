@@ -5,3 +5,8 @@ export type all_schedules = {
 	date: string;
 	scheduled_items: RecordModel[];
 };
+
+export type filter_type = {
+	active: boolean;
+	items: string[];
+};
