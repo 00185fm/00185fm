@@ -26,10 +26,10 @@
 	});
 </script>
 
-<div class="grid h-full grid-cols-4">
+<div class="grid h-full grid-cols-3 lg:grid-cols-4">
 	<div class="col-span-3 w-full" class:text-red-500={$np?.is_live}>
 		<Audio />
-		<div class="grid h-full grid-cols-10">
+		<div class="grid h-full grid-cols-8 lg:grid-cols-10">
 			<div class="col-span-1 inline-flex h-full w-full items-center justify-center">
 				<Playpause />
 			</div>

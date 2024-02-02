@@ -8,7 +8,7 @@
 	import Dates from '$lib/components/dates.svelte';
 	import Tags from '$lib/components/tags.svelte';
 	import type { RecordModel, ListResult } from 'pocketbase';
-	import { selected_episode, showModal } from '$lib/utility/stores';
+	import { filters, selected_episode, showModal } from '$lib/utility/stores';
 	import {
 		animateScroll,
 		fetchEpisodes_paginated,
@@ -26,12 +26,40 @@
 	let hasMore = true;
 
 	const all_params = queryParameters({
-		e: true
+		e: true,
+		t: true,
+		d: true
 	});
 
 	onMount(async () => {
 		episodes = [...newBatch.items];
 	});
+
+	let filtered_episodes: RecordModel[] = episodes;
+
+	$: console.log($filters);
+	$: {
+		if (browser && episodes.length > 0) {
+			if ($filters.active) {
+				if ($all_params.t || $all_params.d) {
+					let res_filter = episodes.filter((e) => $filters.episode_ids.includes(e.id));
+					do {
+						if (res_filter.length !== $filters.episode_ids.length) {
+							loadMoreHandler().then(() => {
+								res_filter = episodes.filter((e) => $filters.episode_ids.includes(e.id));
+							});
+						}
+					} while (
+						res_filter.length !== $filters.episode_ids.length &&
+						newBatch.totalPages >= page_index
+					);
+					filtered_episodes = res_filter;
+				}
+			} else {
+				filtered_episodes = episodes;
+			}
+		}
+	}
 
 	$: {
 		if (browser && episodes.length > 0) {
@@ -81,10 +109,18 @@
 			id="episodes"
 			class="no-scrollbar order-last grid grid-flow-row gap-6 overflow-y-scroll pb-4 font-myriad lg:order-first lg:grid-cols-2 xl:grid-cols-3"
 		>
-			{#each episodes as episode (episode.id)}
-				<EpisodeCard {episode} />
-			{/each}
-			<InfiniteScroll threshold={50} {hasMore} on:loadMore={loadMoreHandler} />
+			{#if episodes.length > 0}
+				{#if $filters.active}
+					{#each filtered_episodes as episode (episode.id)}
+						<EpisodeCard {episode} />
+					{/each}
+				{:else}
+					{#each episodes as episode (episode.id)}
+						<EpisodeCard {episode} />
+					{/each}
+					<InfiniteScroll threshold={50} {hasMore} on:loadMore={loadMoreHandler} />
+				{/if}
+			{/if}
 		</div>
 
 		<!-- TAGS -->

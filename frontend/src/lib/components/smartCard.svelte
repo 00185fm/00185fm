@@ -12,7 +12,7 @@
 </script>
 
 <div
-	class="no-scrollbar flex flex-wrap items-center justify-center gap-3 overflow-y-scroll border-l border-black px-10 py-4"
+	class="no-scrollbar hidden flex-wrap items-center justify-center gap-3 overflow-y-scroll border-l border-black px-10 py-4 lg:flex"
 >
 	{#if !$np?.is_live}
 		{#if episode}
