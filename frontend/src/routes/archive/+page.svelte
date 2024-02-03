@@ -28,7 +28,9 @@
 	const all_params = queryParameters({
 		e: true,
 		t: true,
-		d: true
+		d: true,
+		s: true,
+		q: true
 	});
 
 	onMount(async () => {
@@ -37,11 +39,10 @@
 
 	let filtered_episodes: RecordModel[] = episodes;
 
-	$: console.log($filters);
 	$: {
 		if (browser && episodes.length > 0) {
 			if ($filters.active) {
-				if ($all_params.t || $all_params.d) {
+				if ($all_params.t || $all_params.d || $all_params.q) {
 					let res_filter = episodes.filter((e) => $filters.episode_ids.includes(e.id));
 					do {
 						if (res_filter.length !== $filters.episode_ids.length) {
@@ -111,15 +112,25 @@
 		>
 			{#if episodes.length > 0}
 				{#if $filters.active}
-					{#each filtered_episodes as episode (episode.id)}
-						<EpisodeCard {episode} />
-					{/each}
+					{#if filtered_episodes.length > 0}
+						{#each filtered_episodes as episode (episode.id)}
+							<EpisodeCard {episode} />
+						{/each}
+					{:else}
+						<div class="flex w-full items-start justify-center p-4">
+							<span class="animate-pulse text-4xl">No episodes matching your request</span>
+						</div>
+					{/if}
 				{:else}
 					{#each episodes as episode (episode.id)}
 						<EpisodeCard {episode} />
 					{/each}
 					<InfiniteScroll threshold={50} {hasMore} on:loadMore={loadMoreHandler} />
 				{/if}
+			{:else}
+				<div class="flex w-full items-start justify-center p-4">
+					<span class="animate-pulse text-4xl">Loading episodes..</span>
+				</div>
 			{/if}
 		</div>
 

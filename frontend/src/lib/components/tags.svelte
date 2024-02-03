@@ -11,9 +11,17 @@
 		decode: (value: string | null) => (value ? value.split(',') : []) // Split the string into an array
 	});
 	const all_params = queryParameters({
-		d: true
+		d: true,
+		s: true,
+		q: true
 	});
 	let tags_filter: tag_filter_type[] = [];
+
+	$: {
+		if ($all_params.q) {
+			cleanFilters();
+		}
+	}
 
 	tags.forEach((tag) => {
 		tags_filter.push({
@@ -36,7 +44,7 @@
 		});
 		$t_param = null;
 
-		if (!$all_params.d) {
+		if ($all_params.d === null && $all_params.q === null) {
 			$filters = { active: false, episode_ids: [] };
 		}
 	}

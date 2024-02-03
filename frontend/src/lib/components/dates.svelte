@@ -8,8 +8,16 @@
 	let active_classes = 'outline-red-500 bg-pink-50';
 
 	const all_params = queryParameters({
-		t: true
+		t: true,
+		s: true,
+		q: true
 	});
+
+	$: {
+		if ($all_params.q) {
+			cleanFilters();
+		}
+	}
 
 	const d_param = queryParam('d', {
 		encode: (value: string[]) => value.join(','), // Join the array into a comma-separated string
@@ -38,7 +46,7 @@
 		}));
 		$d_param = null;
 
-		if ($all_params.t === null) {
+		if ($all_params.t === null && $all_params.q === null) {
 			$filters = { active: false, episode_ids: [] };
 		}
 	}

@@ -75,11 +75,12 @@ export const fetchAllRecords = async (
 	collection: string,
 	sort: string = '',
 	expand: string = '',
-	filter: string = ''
+	filter: string = '',
+	fields: string | undefined = ''
 ) => {
 	const result: RecordModel[] = await pb
 		.collection(collection)
-		.getFullList({ sort: sort, filter: filter, expand: expand });
+		.getFullList({ sort: sort, filter: filter, expand: expand, fields: fields });
 	return result;
 };
 
