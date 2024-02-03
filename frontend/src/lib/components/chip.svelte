@@ -9,9 +9,11 @@
 	export let size: string = 'h-[23px] w-fit';
 </script>
 
-<button class="{font} {size} {rounded} {bg_color} {c_class} {outline} {padding}">
-	{text}
-</button>
+<slot>
+	<button on:click class="{font} {size} {rounded} {bg_color} {c_class} {outline} {padding}">
+		{text}
+	</button>
+</slot>
 
 <style>
 	button:hover {

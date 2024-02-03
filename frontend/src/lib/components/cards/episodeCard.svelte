@@ -8,13 +8,13 @@
 	const PUBLIC_DEFAUL_ART_20 = '/img/placeholder/00185fm_default_image_20px.png';
 
 	import { selected_episode } from '$lib/utility/stores';
-	export let episode: RecordModel;
+	export let episode: RecordModel | undefined;
 	export let showModal = false;
 
 	$: url = PUBLIC_DEFAUL_ART_300;
 	$: url_small = PUBLIC_DEFAUL_ART_20;
 	$: {
-		if (episode.image !== '') {
+		if (episode && episode.image !== '') {
 			url = file_url(episode.id, episode.image, '?thumb=300x300', episode.collectionName);
 			url_small = file_url(episode.id, episode.image, '?thumb=20x20', episode.collectionName);
 		}
@@ -23,53 +23,55 @@
 	let img_small: HTMLDivElement;
 </script>
 
-<button
-	id={'e_' + episode.id}
-	on:click={() => {
-		$selected_episode = episode;
-		showModal = true;
-		$e_query = slugify(episode.title);
-	}}
-	class="group"
->
-	<div class="relative aspect-1 overflow-hidden">
-		<div
-			bind:this={img_small}
-			class="blur-load absolute left-0 top-0 h-full w-full bg-cover bg-center opacity-100"
-			style={`background-image: url(${url_small})`}
-		>
-			<img
-				bind:this={img}
-				id="card-image"
-				on:load={() => {
-					img.classList.remove('opacity-0');
-					img.classList.add('opacity-100');
-				}}
-				src={url}
-				alt="Episode Card"
-				class="absolute left-0 top-0 w-full object-contain opacity-0 transition duration-500 ease-in"
-				loading="lazy"
-			/>
-		</div>
+{#if episode}
+	<button
+		id={'e_' + episode.id}
+		on:click={() => {
+			$selected_episode = episode;
+			showModal = true;
+			$e_query = slugify(episode?.title);
+		}}
+		class="group h-fit"
+	>
+		<div class="relative aspect-1 overflow-hidden">
+			<div
+				bind:this={img_small}
+				class="blur-load absolute left-0 top-0 h-full w-full bg-cover bg-center opacity-100"
+				style={`background-image: url(${url_small})`}
+			>
+				<img
+					bind:this={img}
+					id="card-image"
+					on:load={() => {
+						img.classList.remove('opacity-0');
+						img.classList.add('opacity-100');
+					}}
+					src={url}
+					alt="Episode Card"
+					class="absolute left-0 top-0 w-full object-contain opacity-0 transition duration-500 ease-in"
+					loading="lazy"
+				/>
+			</div>
 
-		<div
-			class="relative h-full opacity-0 backdrop-blur-sm backdrop-filter duration-300 group-hover:opacity-100 group-hover:transition-opacity"
-		>
-			<img
-				src="/img/episode_hovercard1000px.webp"
-				alt="Hover Card"
-				class=" h-full object-contain drop-shadow-xl"
-				loading="lazy"
-			/>
-			<div class="card-text rounded-lg p-4">
-				<div class="h-full w-full flex-wrap items-center justify-center">
-					<p class="text-s line-clamp-1 font-sans uppercase">{episode.title}</p>
-					<p class=" line-clamp-1 font-sans text-xs">{episode.author}</p>
+			<div
+				class="relative h-full opacity-0 backdrop-blur-sm backdrop-filter duration-300 group-hover:opacity-100 group-hover:transition-opacity"
+			>
+				<img
+					src="/img/episode_hovercard1000px.webp"
+					alt="Hover Card"
+					class=" h-full object-contain drop-shadow-xl"
+					loading="lazy"
+				/>
+				<div class="card-text rounded-lg p-4">
+					<div class="h-full w-full flex-wrap items-center justify-center">
+						<p class="text-s line-clamp-1 font-sans uppercase">{episode.title}</p>
+						<p class=" line-clamp-1 font-sans text-xs">{episode.author}</p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</button>
+	</button>
+{/if}
 
 <style>
 	.card-text {

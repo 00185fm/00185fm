@@ -1,7 +1,7 @@
 export const playpause = async (player: HTMLAudioElement) => {
 	let icon = 'play';
 	if (player.paused) {
-		player.load();
+		// player.load();
 		player.play();
 		icon = 'pause';
 	} else {
